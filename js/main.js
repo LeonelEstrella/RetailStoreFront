@@ -1,6 +1,4 @@
-console.log("hola");
-
-const urlProductos = "https://localhost:7036/api/Product?skip=0&limit=0";
+const urlProductos = "https://localhost:7036/api/Product";
 let productos = [];
 
 fetch(urlProductos)
@@ -24,10 +22,15 @@ function CargarProductos(productosElegidos) {
         const div = document.createElement("div");
         div.classList.add("producto");
         div.innerHTML = `
-        <img class="producto-imagen" src="${producto.ImageLink}" alt="${producto.titulo}">
+        <img class="producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
         <div class="producto-detalles">
-            <h3 class="producto-titulo">${producto.titulo}</h3>
-            <p class="producto-precio">$${producto.precio}</p>
+            <h3 class="producto-titulo">${producto.name}</h3>
+            <div class="precio-y-descuento">
+                <p class="producto-precio">$${producto.price}</p>
+                ${
+                    producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''
+                }
+            </div>
             <button class="producto-agregar" id="${producto.id}">Agregar</button>
         </div>
     `;
@@ -45,9 +48,9 @@ botonesCategorias.forEach(boton => {
         e.currentTarget.classList.add("active");
 
         if (e.currentTarget.id != "todos") {
-            const productoCategoria = productos.find(producto => producto.categoria.id === e.currentTarget.id);
-            tituloPrincipal.innerText = productoCategoria.categoria.nombre;
-            const productosBoton = productos.filter(producto => producto.categoria.id === e.currentTarget.id);
+            const productoCategoria = productos.find(producto => producto.categoryName === e.currentTarget.id);
+            tituloPrincipal.innerText = productoCategoria.categoryName;
+            const productosBoton = productos.filter(producto => producto.categoryName === e.currentTarget.id);
             CargarProductos(productosBoton);
         } else {
             tituloPrincipal.innerText = "Todos los productos";
