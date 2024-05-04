@@ -9,12 +9,48 @@ fetch(urlProductos)
         console.log(productos);
     })
 
+console.log(productos);
 
 const contenedorProductos = document.querySelector("#contenedor-productos");
 const botonesCategorias = document.querySelectorAll(".boton-categoria");
 const tituloPrincipal = document.querySelector(".titulo-principal");
 let botonesAgregar;
 const numerito = document.querySelector(".numerito");
+const buscador = document.querySelector("#buscador");
+
+let productosFiltrados = []; // Lista para almacenar los productos filtrados
+
+document.addEventListener("keyup", e => {
+    if (e.target.matches("#buscador")) {
+        const valorBusqueda = e.target.value.toLowerCase();
+        productosFiltrados = [];
+        
+        if (tituloPrincipal.innerText === "Todos los productos") {
+            productos.forEach(producto => {
+                const nombreProducto = producto.name.toLowerCase();
+                if (nombreProducto.includes(valorBusqueda)) {
+                    productosFiltrados.push(producto);
+                }
+            });
+        } else {
+            const productosCategoria = productos.filter(producto => producto.categoryName.replace(/_/g, ' ') === tituloPrincipal.innerText);
+            productosCategoria.forEach(producto => {
+                const nombreProducto = producto.name.toLowerCase();
+                if (nombreProducto.includes(valorBusqueda)) {
+                    productosFiltrados.push(producto);
+                }
+            });
+        } 
+        CargarProductos(productosFiltrados);
+    }
+});
+
+botonesCategorias.forEach(boton => {
+    boton.addEventListener("click", () => {
+        buscador.value = "";
+    });
+});
+
 
 function CargarProductos(productosElegidos) {
     contenedorProductos.innerHTML = "";
@@ -49,7 +85,7 @@ botonesCategorias.forEach(boton => {
 
         if (e.currentTarget.id != "todos") {
             const productoCategoria = productos.find(producto => producto.categoryName === e.currentTarget.id);
-            tituloPrincipal.innerText = productoCategoria.categoryName;
+            tituloPrincipal.innerText = productoCategoria.categoryName.replace(/_/g, ' ');
             const productosBoton = productos.filter(producto => producto.categoryName === e.currentTarget.id);
             CargarProductos(productosBoton);
         } else {

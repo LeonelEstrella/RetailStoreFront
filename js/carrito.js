@@ -29,7 +29,7 @@ function CargarProductosCarrito() {
                 <img class="carrito-producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
                 <div class="carrito-producto-titulo">
                     <small>Título</small>
-                    <h3>${truncateString(producto.name, 5)}</h3>
+                    <h3>${truncateString(producto.name, 33)}</h3>
                 </div>
                 <div class="carrito-producto-cantidad">
                     <small>Cantidad</small>
@@ -152,10 +152,17 @@ function ComprarCarrito() {
 }
 
 
-function truncateString(str, numWords) {
-    const words = str.split(' ');
-    if (words.length > numWords) {
-        return words.slice(0, numWords).join(' ') + '...';
+// function truncateString(str, numWords) {
+//     const words = str.split(' ');
+//     if (words.length > numWords) {
+//         return words.slice(0, numWords).join(' ') + '...';
+//     }
+//     return str;
+// }
+
+function truncateString(str, numChars) {
+    if (str.length > numChars) {
+        return str.slice(0, numChars) + '...';
     }
     return str;
 }
