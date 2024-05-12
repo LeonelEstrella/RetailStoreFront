@@ -40,7 +40,7 @@ function CargarProductosCarrito() {
                     <p>$${producto.price}</p>
                 </div>
                 <div class="carrito-descuento">
-                ${producto.discount !== 0 ? `
+                ${producto.discount && producto.discount !== 0 ? `
                     <small>Descuento</small>
                     <p class="producto-descuento">- ${producto.discount}%</p>` : ''
                 }
@@ -84,7 +84,7 @@ function EliminarDelCarrito(e) {
         position: "right", // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
-            background: "linear-gradient(to right, #961818, #ececec)",
+            background: "linear-gradient(to right, #A35FA3, #ececec)",
             borderRadius: "2rem",
             textTransform: "uppercase",
             fontSize: "0.75rem"
@@ -164,7 +164,7 @@ const opciones = {
 
 console.log(opciones.body);
 
-const urlCompra = "https://localhost:7036/api/Sale";
+const urlCompra = "https://localhost:7036/Sale";
 
 function ComprarCarrito() {
     productosEnCarrito.length = 0;

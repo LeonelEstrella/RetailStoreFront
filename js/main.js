@@ -64,7 +64,7 @@ function CargarProductos(productosElegidos) {
             <div class="precio-y-descuento">
                 <p class="producto-precio">$${producto.price}</p>
                 ${
-                    producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''
+                    producto.discount && producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''
                 }
             </div>
             <button class="producto-agregar" id="${producto.id}">Agregar</button>
@@ -85,7 +85,7 @@ botonesCategorias.forEach(boton => {
 
         if (e.currentTarget.id != "todos") {
             const productoCategoria = productos.find(producto => producto.categoryName === e.currentTarget.id);
-            tituloPrincipal.innerText = productoCategoria.categoryName.replace(/_/g, ' ');
+            tituloPrincipal.innerText = productoCategoria.categoryName;
             const productosBoton = productos.filter(producto => producto.categoryName === e.currentTarget.id);
             CargarProductos(productosBoton);
         } else {
@@ -125,7 +125,7 @@ function AgregarAlCarrito(e) {
         position: "right", // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
-          background: "linear-gradient(to right, #4b33a8, #785ce9)",
+          background: "linear-gradient(to right, #800080, #A35FA3)",
           borderRadius: "2rem",
           textTransform: "uppercase",
           fontSize: "0.75rem"
