@@ -22,37 +22,20 @@ function CargarProductosCarrito() {
         contenedorCarritoProductos.innerHTML = "";
 
         productosEnCarrito.forEach(producto => {
-
             const div = document.createElement("div");
             div.classList.add("carrito-producto");
             div.innerHTML = `
                 <img class="carrito-producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
-                <div class="carrito-producto-titulo">
-                    <small>Título</small>
-                    <h3>${truncateString(producto.name, 33)}</h3>
-                </div>
-                <div class="carrito-producto-cantidad">
-                    <small>Cantidad</small>
-                    <p>${producto.cantidad}</p>
-                </div>
-                <div class="carrito-producto-precio">
-                    <small>Precio</small>
-                    <p>$${producto.price}</p>
-                </div>
-                <div class="carrito-descuento">
-                ${producto.discount && producto.discount !== 0 ? `
-                    <small>Descuento</small>
-                    <p class="producto-descuento">- ${producto.discount}%</p>` : ''
-                }
-                </div>
-                <div class="carrito-producto-subtotal">
-                    <small>Subtotal</small>
-                    <p>$${producto.price * producto.cantidad}</p>
+                <div class="carrito-producto-detalle">
+                    <span class="carrito-producto-nombre">${producto.name}</span>
+                    <span class="carrito-producto-cantidad">Cantidad: ${producto.cantidad}</span>
+                    <span class="carrito-producto-precio">Precio: $${producto.price}</span>
+                    <span class="carrito-producto-subtotal">Subtotal: $${producto.price * producto.cantidad}</span>
                 </div>
                 <button class="carrito-producto-eliminar" id="${producto.id}"><i class="bi bi-trash-fill"></i></button>
-        `;
+            `;
             contenedorCarritoProductos.append(div);
-        })
+        });
     } else {
         contenedorCarritoVacio.classList.remove("disabled");
         contenedorCarritoProductos.classList.add("disabled");
@@ -198,20 +181,4 @@ function ComprarCarrito() {
     contenedorCarritoProductos.classList.add("disabled");
     contenedorCarritoAcciones.classList.add("disabled");
     contenedorCarritoComprado.classList.remove("disabled");
-}
-
-
-// function truncateString(str, numWords) {
-//     const words = str.split(' ');
-//     if (words.length > numWords) {
-//         return words.slice(0, numWords).join(' ') + '...';
-//     }
-//     return str;
-// }
-
-function truncateString(str, numChars) {
-    if (str.length > numChars) {
-        return str.slice(0, numChars) + '...';
-    }
-    return str;
 }
