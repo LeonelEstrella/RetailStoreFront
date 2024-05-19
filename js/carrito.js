@@ -185,36 +185,44 @@ function ActualizarTotal() {
     return totalDescuento.toFixed(2);
 }
 
-let totalCuenta = ActualizarTotal();
-
-let listaProductos = [];
-productosEnCarrito.forEach(producto => {
-    listaProductos.push({
-        productId: producto.id,
-        quantity: producto.cantidad
-    })
-});
-
-let nuevaVenta = {
-    products: listaProductos,
-    totalPayed: parseFloat(totalCuenta)
-}
-
-const opciones = {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(nuevaVenta)
-};
-
-console.log(opciones.body);
-
 const urlCompra = "https://localhost:7036/Sale";
 
+// Escuchar el evento de cambio en los inputs de cantidad
+document.querySelectorAll('.cantidad-producto').forEach(input => {
+    input.addEventListener('change', function(event) {
+        const productId = parseInt(event.target.dataset.id);
+        const newQuantity = parseInt(event.target.value);
+        
+        // Actualizar la cantidad del producto correspondiente en productosEnCarrito
+        const productoIndex = productosEnCarrito.findIndex(producto => producto.id === productId);
+        if (productoIndex !== -1) {
+            productosEnCarrito[productoIndex].cantidad = newQuantity;
+        }
+    });
+});
+
+// Método para enviar la solicitud de compra
 function ComprarCarrito() {
-    productosEnCarrito.length = 0;
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+    // Crear la lista de productos con las cantidades actualizadas
+    let listaProductos = productosEnCarrito.map(producto => ({
+        productId: producto.id,
+        quantity: producto.cantidad
+    }));
+
+    let nuevaVenta = {
+        products: listaProductos,
+        totalPayed: parseFloat(ActualizarTotal())
+    }
+
+    const opciones = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(nuevaVenta)
+    };
+
+    console.log(opciones.body);
 
     fetch(urlCompra, opciones)
         .then(response => {
@@ -231,6 +239,10 @@ function ComprarCarrito() {
             // Manejar errores de la solicitud
             console.error('Error:', error);
         });
+
+    // Limpiar el carrito y mostrar un mensaje de éxito
+    productosEnCarrito.length = 0;
+    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
 
     Swal.fire({
         position: "center",
