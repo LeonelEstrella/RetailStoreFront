@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Retail Store</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <aside>
+            <!-- Encabezado y navegación -->
+        </aside>
+        <main>
+            <h2 class="titulo-principal">Lista de Ventas</h2>
+            <div class="contedor-carrito">
+                <div>
+                    <label for="fecha-busqueda">Ingrese la fecha de búsqueda:</label>
+                    <input type="date" id="fecha-busqueda" name="fecha-busqueda">
+                    <button id="btn-buscar">Buscar</button>
+                </div>
+                <div id="ventas-lista" class="carrito-productos">
+                    <!-- Aquí se insertarán las ventas -->
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="./js/carrito.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/ventas.js"></script>
+</body>
+
+</html>

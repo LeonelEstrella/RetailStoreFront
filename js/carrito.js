@@ -105,11 +105,6 @@ function ActualizarSubtotales() {
     });
 }
 
-function ActualizarTotal() {
-    const total = productosEnCarrito.reduce((acc, producto) => acc + (producto.price * producto.cantidad), 0);
-    contenedorTotal.textContent = `$${total.toFixed(2)}`;
-}
-
 CargarProductosCarrito();
 
 function ActualizarBotonesEliminar() {
