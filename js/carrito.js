@@ -112,8 +112,6 @@ function VaciarCarrito(e) {
             CargarProductosCarrito();
         }
     });
-
-
 }
 
 function ActualizarTotal() {
