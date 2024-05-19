@@ -27,12 +27,13 @@ function CargarProductosCarrito() {
             div.innerHTML = `
                 <img class="carrito-producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
                 <div class="carrito-producto-detalle">
-                    <span class="carrito-producto-nombre">${producto.name}</span>
-                    <span class="carrito-producto-cantidad">Cantidad: 
+                    <div class="carrito-producto-nombre">${producto.name}</div>
+                    <div class="carrito-producto-cantidad">
+                        Cantidad: 
                         <input type="number" class="cantidad-producto" min="1" value="${producto.cantidad}" data-id="${producto.id}">
-                    </span>
-                    <span class="carrito-producto-precio">Precio: $${producto.price}</span>
-                    <span class="carrito-producto-subtotal">Subtotal: $${producto.price * producto.cantidad}</span>
+                    </div>
+                    <div class="carrito-producto-precio">Precio: $${producto.price}</div>
+                    <div class="carrito-producto-subtotal">Subtotal: $${producto.price * producto.cantidad}</div>
                 </div>
                 <button class="carrito-producto-eliminar" id="${producto.id}"><i class="bi bi-trash-fill"></i></button>
             `;

@@ -233,6 +233,35 @@ main {
     border-radius: 1rem;
 }
 
+.carrito-producto-detalle {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr; /* Definimos anchos específicos para las columnas */
+    gap: 1rem;
+    align-items: center;
+}
+
+.carrito-producto-nombre,
+.carrito-producto-cantidad,
+.carrito-producto-precio,
+.carrito-producto-subtotal {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.carrito-producto-cantidad {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinea horizontalmente el texto y el input */
+}
+
+.cantidad-producto {
+    border-radius: 1rem;
+    border: none;
+    width: 4rem; /* Ajusta el ancho del input */
+    margin-left: 0.5rem; /* Espacio entre el texto y el input */
+    text-align: center; /* Centra el texto dentro del input */
+}
+
 .carrito-producto-imagen {
     width: 4rem;
     height: auto;
@@ -244,14 +273,6 @@ main {
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     align-items: center;
-}
-
-.carrito-producto-nombre,
-.carrito-producto-cantidad,
-.carrito-producto-precio,
-.carrito-producto-subtotal {
-    font-size: 1rem;
-    text-align: center;
 }
 
 .carrito-producto small {
