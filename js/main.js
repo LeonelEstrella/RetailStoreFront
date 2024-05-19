@@ -35,7 +35,7 @@ document.addEventListener("keyup", async e => {
 
                     if (tituloPrincipal.innerText !== "Todos los productos") {
                         productosFiltrados = productosFiltrados.filter(producto => 
-                            producto.categoryName.replace(/_/g, ' ') === tituloPrincipal.innerText
+                            producto.categoryName === tituloPrincipal.innerText
                         );
                     }
 
@@ -51,7 +51,7 @@ document.addEventListener("keyup", async e => {
                 productosFiltrados = productos;
             } else {
                 productosFiltrados = productos.filter(producto => 
-                    producto.categoryName.replace(/_/g, ' ') === tituloPrincipal.innerText
+                    producto.categoryName === tituloPrincipal.innerText
                 );
             }
 
