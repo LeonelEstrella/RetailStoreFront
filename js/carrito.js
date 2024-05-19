@@ -30,7 +30,7 @@ function CargarProductosCarrito() {
                     <div class="carrito-producto-nombre">${producto.name}</div>
                     <div class="carrito-producto-cantidad">
                         Cantidad: 
-                        <input type="number" class="cantidad-producto" min="1" value="${producto.cantidad}" data-id="${producto.id}">
+                        <input type="number" class="cantidad-producto" min="0" value="${producto.cantidad}" data-id="${producto.id}">
                     </div>
                     <div class="carrito-producto-precio">Precio: $${producto.price}</div>
                     <div class="carrito-producto-subtotal">Subtotal: $${producto.price * producto.cantidad}</div>
@@ -109,8 +109,6 @@ function ActualizarTotal() {
     const total = productosEnCarrito.reduce((acc, producto) => acc + (producto.price * producto.cantidad), 0);
     contenedorTotal.textContent = `$${total.toFixed(2)}`;
 }
-
-// El resto de las funciones sigue igual
 
 CargarProductosCarrito();
 
