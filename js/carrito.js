@@ -28,13 +28,21 @@ function CargarProductosCarrito() {
                 <img class="carrito-producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
                 <div class="carrito-producto-detalle">
                     <span class="carrito-producto-nombre">${producto.name}</span>
-                    <span class="carrito-producto-cantidad">Cantidad: ${producto.cantidad}</span>
+                    <span class="carrito-producto-cantidad">Cantidad: 
+                        <input type="number" class="cantidad-producto" min="1" value="${producto.cantidad}" data-id="${producto.id}">
+                    </span>
                     <span class="carrito-producto-precio">Precio: $${producto.price}</span>
                     <span class="carrito-producto-subtotal">Subtotal: $${producto.price * producto.cantidad}</span>
                 </div>
                 <button class="carrito-producto-eliminar" id="${producto.id}"><i class="bi bi-trash-fill"></i></button>
             `;
             contenedorCarritoProductos.append(div);
+        });
+
+        // Agregar event listeners para los cambios en la cantidad
+        const inputsCantidad = document.querySelectorAll('.cantidad-producto');
+        inputsCantidad.forEach(input => {
+            input.addEventListener('change', ActualizarCantidad);
         });
     } else {
         contenedorCarritoVacio.classList.remove("disabled");
@@ -46,6 +54,62 @@ function CargarProductosCarrito() {
     ActualizarBotonesEliminar();
     ActualizarTotal();
 }
+
+function ActualizarCantidad(e) {
+    const idProducto = e.currentTarget.getAttribute('data-id');
+    const cantidadNueva = parseInt(e.currentTarget.value);
+
+    // Actualizar la cantidad del producto en el carrito
+    const index = productosEnCarrito.findIndex(producto => producto.id === idProducto);
+    if (index !== -1) {
+        if (cantidadNueva === 0) {
+            // Eliminar producto si la cantidad es 0
+            productosEnCarrito.splice(index, 1);
+            Toastify({
+                text: "Producto eliminado",
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                style: {
+                    background: "linear-gradient(to right, #A35FA3, #ececec)",
+                    borderRadius: "2rem",
+                    textTransform: "uppercase",
+                    fontSize: "0.75rem"
+                },
+                offset: {
+                    x: "1.5rem", // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                    y: "1.5rem" // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                },
+                onClick: function () { } // Callback after click
+            }).showToast();
+        } else {
+            productosEnCarrito[index].cantidad = cantidadNueva;
+        }
+    }
+
+    // Recargar productos en el carrito
+    CargarProductosCarrito();
+
+    // Guardar los cambios en el almacenamiento local
+    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+}
+
+function ActualizarSubtotales() {
+    const subtotales = document.querySelectorAll('.carrito-producto-subtotal');
+    productosEnCarrito.forEach((producto, index) => {
+        const subtotal = subtotales[index];
+        subtotal.textContent = `Subtotal: $${producto.price * producto.cantidad}`;
+    });
+}
+
+function ActualizarTotal() {
+    const total = productosEnCarrito.reduce((acc, producto) => acc + (producto.price * producto.cantidad), 0);
+    contenedorTotal.textContent = `$${total.toFixed(2)}`;
+}
+
+// El resto de las funciones sigue igual
 
 CargarProductosCarrito();
 
