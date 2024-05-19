@@ -20,28 +20,43 @@ const buscador = document.querySelector("#buscador");
 
 let productosFiltrados = []; // Lista para almacenar los productos filtrados
 
-document.addEventListener("keyup", e => {
+document.addEventListener("keyup", async e => {
     if (e.target.matches("#buscador")) {
         const valorBusqueda = e.target.value.toLowerCase();
         productosFiltrados = [];
-        
-        if (tituloPrincipal.innerText === "Todos los productos") {
-            productos.forEach(producto => {
-                const nombreProducto = producto.name.toLowerCase();
-                if (nombreProducto.includes(valorBusqueda)) {
-                    productosFiltrados.push(producto);
+
+        if (valorBusqueda.length > 0) {
+            let endpoint = `${urlProductos}?name=${encodeURIComponent(valorBusqueda)}`;
+
+            try {
+                let response = await fetch(endpoint);
+                if (response.ok) {
+                    productosFiltrados = await response.json();
+
+                    if (tituloPrincipal.innerText !== "Todos los productos") {
+                        productosFiltrados = productosFiltrados.filter(producto => 
+                            producto.categoryName.replace(/_/g, ' ') === tituloPrincipal.innerText
+                        );
+                    }
+
+                    CargarProductos(productosFiltrados);
+                } else {
+                    console.error("Error en la solicitud: " + response.statusText);
                 }
-            });
+            } catch (error) {
+                console.error("Error de red: " + error.message);
+            }
         } else {
-            const productosCategoria = productos.filter(producto => producto.categoryName.replace(/_/g, ' ') === tituloPrincipal.innerText);
-            productosCategoria.forEach(producto => {
-                const nombreProducto = producto.name.toLowerCase();
-                if (nombreProducto.includes(valorBusqueda)) {
-                    productosFiltrados.push(producto);
-                }
-            });
-        } 
-        CargarProductos(productosFiltrados);
+            if (tituloPrincipal.innerText === "Todos los productos") {
+                productosFiltrados = productos;
+            } else {
+                productosFiltrados = productos.filter(producto => 
+                    producto.categoryName.replace(/_/g, ' ') === tituloPrincipal.innerText
+                );
+            }
+
+            CargarProductos(productosFiltrados);
+        }
     }
 });
 
