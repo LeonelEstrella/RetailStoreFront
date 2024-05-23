@@ -99,7 +99,7 @@ function mostrarVentas(ventas) {
                 <div class="carrito-producto-subtotal">Fecha: ${fechaFormateada}</div>
                 <button class="btn-ver-detalle-venta" id="${btnAbrirModalId}">Ver detalles</button>
                 <dialog id="${modalId}">
-                    <h2 class="titulo-principal">Detalle de la venta: ${venta.id}</h2>
+                    <h2 class="titulo-principal">Detalles venta: ${venta.id}</h2>
                     <div class="venta-detalles"></div> <!-- Contenedor para los detalles de la venta -->
                     <button class="btn-cerrar-modal" id="${btnCerrarModalId}">Cerrar ventana</button>
                 </dialog>

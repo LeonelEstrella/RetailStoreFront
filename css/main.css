@@ -407,3 +407,22 @@ dialog::backdrop {
 .custom-alert {
     left: 10%;
 }
+
+#fecha-inicio, #fecha-fin {
+    width: 15vw;
+}
+
+label {
+    margin: 1rem;
+}
+
+#btn-buscar{
+    border: 0;
+    width: 8vw;
+    margin-left: 1rem ;
+    background-color: var(---clr-main);
+    padding: 1rem;
+    color: var(---clr-white);
+    text-transform: uppercase;
+    cursor: pointer;
+}
