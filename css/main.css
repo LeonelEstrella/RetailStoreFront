@@ -402,3 +402,8 @@ dialog::backdrop {
     gap: 1rem;
     align-items: center;
 }
+
+/* Estilo personalizado para posicionar la alerta */
+.custom-alert {
+    left: 10%;
+}

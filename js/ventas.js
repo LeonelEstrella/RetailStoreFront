@@ -25,10 +25,41 @@ async function cargarVentasDesdeFechas(fechaInicio, fechaFin) {
         console.log(urlConFechas);
         const response = await fetch(urlConFechas);
         if (!response.ok) {
+            if (response.status === 400) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error al realizar la búsqueda",
+                    text: "La fecha de inicio no puede ser mayor a la fecha de fin.",
+                    customClass: {
+                        popup: 'custom-alert'
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error al cargar las ventas",
+                    text: "Vuelva a intentar realizar la búsqueda por favor.",
+                    customClass: {
+                        popup: 'custom-alert'
+                    }
+                });
+            }
             throw new Error("Error al cargar las ventas");
         }
+
         const ventas = await response.json();
-        mostrarVentas(ventas);
+        if (ventas.length === 0) {
+            Swal.fire({
+                icon: "info",
+                title: "Sin ventas",
+                text: "No se encontraron ventas en las fechas especificadas.",
+                customClass: {
+                    popup: 'custom-alert'
+                }
+            });
+        } else {
+            mostrarVentas(ventas);
+        }
     } catch (error) {
         console.error("Error:", error);
     }
@@ -37,18 +68,6 @@ async function cargarVentasDesdeFechas(fechaInicio, fechaFin) {
 function handleBuscarClick() {
     const fechaInicio = inputFechaInicio.value;
     const fechaFin = inputFechaFin.value;
-
-    const fechaInicioDate = fechaInicio ? new Date(fechaInicio) : null;
-    const fechaFinDate = fechaFin ? new Date(fechaFin) : null;
-
-    if (fechaInicioDate && fechaFinDate) {
-        // Si ambas fechas están presentes, validar que la fecha de inicio no sea mayor que la fecha de fin
-        if (fechaInicioDate > fechaFinDate) {
-            console.error("La fecha de inicio no puede ser mayor que la fecha de fin");
-            alert("La fecha de inicio no puede ser mayor que la fecha de fin");
-            return;
-        }
-    }
 
     // Llamar a la función para cargar las ventas, pasando las fechas según estén disponibles
     cargarVentasDesdeFechas(fechaInicio || null, fechaFin || null);
@@ -74,7 +93,7 @@ function mostrarVentas(ventas) {
         div.innerHTML = `
             <i class="bi bi-receipt"></i>
             <div class="venta-producto-detalle">
-                <div class="carrito-producto-nombre">Venta ID: ${venta.id}</div>
+                <div class="carrito-producto-nombre">Venta N°${venta.id}</div>
                 <div class="carrito-producto-cantidad">Total: $${venta.totalPay.toFixed(2)}</div>
                 <div class="carrito-producto-precio">Cantidad de Productos: ${venta.totalQuantity}</div>
                 <div class="carrito-producto-subtotal">Fecha: ${fechaFormateada}</div>
