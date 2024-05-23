@@ -73,7 +73,7 @@ function mostrarVentas(ventas) {
 
         div.innerHTML = `
             <i class="bi bi-receipt"></i>
-            <div class="carrito-producto-detalle">
+            <div class="venta-producto-detalle">
                 <div class="carrito-producto-nombre">Venta ID: ${venta.id}</div>
                 <div class="carrito-producto-cantidad">Total: $${venta.totalPay.toFixed(2)}</div>
                 <div class="carrito-producto-precio">Cantidad de Productos: ${venta.totalQuantity}</div>
@@ -143,7 +143,7 @@ function mostrarDetallesVenta(venta, detallesDiv) {
     detallesDiv.innerHTML = `
         <div><b>Total:</b> $${venta.totalPay.toFixed(2)}</div>
         <div><b>Subtotal:</b> $${venta.subtotal.toFixed(2)}</div>
-        <div><b>Impuestos:</b> $${venta.taxes.toFixed(2)}</div>
+        <div><b>Impuesto por producto:</b> 21%</div>
         <br>
         <div><b>Productos:</b></div>
         <br>

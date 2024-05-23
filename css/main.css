@@ -233,7 +233,7 @@ main {
     border-radius: 1rem;
 }
 
-.carrito-producto-detalle {
+.carrito-producto-detalle/*, .venta-producto-detalle */{
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr; /* Definimos anchos específicos para las columnas */
     gap: 1rem;
@@ -243,7 +243,8 @@ main {
 .carrito-producto-nombre,
 .carrito-producto-cantidad,
 .carrito-producto-precio,
-.carrito-producto-subtotal {
+.carrito-producto-subtotal,
+.btn-ver-detalle-venta {
     font-size: 1rem;
     text-align: center;
 }
@@ -353,7 +354,6 @@ input {
 /*VENTAS*/
 
 .venta-producto {
-    cursor: pointer;
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ddd;
@@ -373,6 +373,14 @@ input {
     transition: background-color 0.2s, color 0.2s;
 }
 
+/* Opcional: Para asegurarse de que el botón tenga un tamaño y alineación adecuados */
+.btn-ver-detalle-venta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Ajustar la altura para que coincida con las otras celdas */
+}
+
 dialog {
     position: fixed;
     top: 50%;
@@ -386,4 +394,11 @@ dialog {
 }
 dialog::backdrop {
     background: rgba(0,0,0,0.5);
+}
+
+.venta-producto-detalle {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr auto; /* Añadido 'auto' para el botón */
+    gap: 1rem;
+    align-items: center;
 }
