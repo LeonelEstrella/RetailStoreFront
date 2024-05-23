@@ -392,6 +392,57 @@ dialog {
     border-radius: 8px;
     background: white;
 }
+
+/* Personalización de la barra de desplazamiento para Webkit (Chrome, Safari) */
+dialog::-webkit-scrollbar {
+    width: 12px; /* Ancho de la barra de desplazamiento vertical */
+    height: 12px; /* Alto de la barra de desplazamiento horizontal */
+}
+
+dialog::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Fondo del track */
+    border-radius: 10px;
+}
+
+dialog::-webkit-scrollbar-thumb {
+    background: #888; /* Color del pulgar */
+    border-radius: 10px;
+}
+
+dialog::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color del pulgar al pasar el cursor */
+}
+
+/* Personalización de la barra de desplazamiento para Firefox */
+dialog {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+/* Personalización de la barra de desplazamiento para Internet Explorer y Edge */
+dialog {
+    -ms-overflow-style: none; /* Oculta la barra de desplazamiento en IE y Edge */
+}
+
+dialog::-ms-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+dialog::-ms-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+dialog::-ms-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+dialog::-ms-scrollbar-thumb:hover {
+    background: #555;
+}
+
 dialog::backdrop {
     background: rgba(0,0,0,0.5);
 }
