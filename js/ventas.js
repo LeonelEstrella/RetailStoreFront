@@ -53,6 +53,8 @@ async function cargarVentasDesdeFechas(fechaInicio, fechaFin) {
                 icon: "info",
                 title: "Sin ventas",
                 text: "No se encontraron ventas en las fechas especificadas.",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Confirmar",
                 customClass: {
                     popup: 'custom-alert'
                 }

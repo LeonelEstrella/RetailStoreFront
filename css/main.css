@@ -151,8 +151,8 @@ main {
 }
 
 .producto-imagen {
-    width: 330px; /* Establece un tamaño fijo para la imagen */
-    height: 350px; /* Establece un tamaño fijo para la imagen */
+    width: 320px; /* Establece un tamaño fijo para la imagen */
+    height: 320px; /* Establece un tamaño fijo para la imagen */
     border-radius: 1rem;
 }
 
@@ -265,7 +265,7 @@ main {
 
 .carrito-producto-imagen {
     width: 4rem;
-    height: auto;
+    height: 4rem;
     border-radius: 1rem;
 }
 

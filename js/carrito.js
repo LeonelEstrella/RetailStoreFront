@@ -32,7 +32,7 @@ function CargarProductosCarrito() {
                         Cantidad: 
                         <input type="number" class="cantidad-producto" min="0" value="${producto.cantidad}" data-id="${producto.id}">
                     </div>
-                    <div class="carrito-producto-precio">Precio: $${producto.price}</div>
+                    <div class="carrito-producto-precio">Precio x ud: $${producto.price}</div>
                     <div class="carrito-producto-subtotal">Subtotal: $${producto.price * producto.cantidad}</div>
                 </div>
                 <button class="carrito-producto-eliminar" id="${producto.id}"><i class="bi bi-trash-fill"></i></button>
@@ -152,13 +152,14 @@ function VaciarCarrito(e) {
 
     Swal.fire({
         title: "¿Estás seguro?",
-        text: "Esta acción no puede ser revertida!",
+        text: "¡Esta acción no puede ser revertida!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Si, vaciar carrito.",
-        cancelButtonText: "No."
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
