@@ -124,9 +124,11 @@ function CargarProductos(productosElegidos) {
             <img class="producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
             <div class="producto-detalles">
                 <h3 class="producto-titulo">${producto.name}</h3>
-                <a href="#" class="producto-detalles-link" data-id="${producto.id}">
-                    <span>Ver detalles</span>
-                </a>
+                <div class="ver-detalles-contenedor">
+                    <a href="#" class="producto-detalles-link" data-id="${producto.id}">
+                        <span>Ver detalles</span>
+                    </a>
+                </div>
                 <div class="precio-y-descuento">
                     ${producto.discount && producto.discount !== 0 ? `
                     <span class="precio-con-descuento">

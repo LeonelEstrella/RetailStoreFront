@@ -170,6 +170,10 @@ main {
     gap: 0.25rem;
 }
 
+.ver-detalles-contenedor {
+    display: inline-block;
+}
+
 .precio-y-descuento {
     display: flex;
     justify-content: space-between;
