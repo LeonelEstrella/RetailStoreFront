@@ -184,16 +184,20 @@ main {
 
 .producto-agregar{
     margin-bottom: rem;
-    margin-top: 0.5rem;
+    margin-top: -0.2rem;
+    margin-right: 1rem;
     border: 0;
     background-color: var(---clr-white);
     color: var(---clr-main);
-    padding: .5rem;
+    padding: 0.4rem 1rem;
     text-transform: uppercase;
     border-radius: 2rem;
     cursor: pointer;
     border: 2px solid var(---clr-white);
     transition: background-color 0.2s, color 0.2s;
+    align-self: end; /* Alinea el botón al final del contenedor */
+    justify-self: end; /* Alinea el botón a la derecha del contenedor */
+    width: 7rem; /* Permite que el ancho del botón se ajuste automáticamente */
 }
 
 .producto-agregar:hover {
@@ -238,11 +242,12 @@ main {
     border-radius: 1rem;
 }
 
-.carrito-producto-detalle/*, .venta-producto-detalle */{
+.carrito-producto-detalle {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr; /* Definimos anchos específicos para las columnas */
     gap: 1rem;
     align-items: center;
+    
 }
 
 .carrito-producto-nombre,
