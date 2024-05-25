@@ -210,6 +210,10 @@ main {
     font-family: 'Rubik', sans-serif;
 }
 
+.align-sweetalert-left {
+    text-align: left;
+}
+
 /** CARRITO **/
 
 .contedor-carrito {

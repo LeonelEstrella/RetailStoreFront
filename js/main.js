@@ -165,8 +165,10 @@ function fetchProductDetails(productId) {
             Swal.fire({
                 title: producto.name,
                 html: `
-                    <p><strong>Categoría:</strong> ${producto.category.name}</p><br>
-                    <p><strong>Descripción:</strong> ${producto.description}</p>
+                    <div class="align-sweetalert-left">
+                        <p><strong>Categoría:</strong> ${producto.category.name}</p><br>
+                        <p><strong>Descripción:</strong> ${producto.description}</p>
+                    </div>
                 `,
                 imageUrl: producto.imageUrl,
                 imageWidth: 320,
