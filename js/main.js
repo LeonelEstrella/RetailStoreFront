@@ -124,6 +124,7 @@ function CargarProductos(productosElegidos) {
             <img class="producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
             <div class="producto-detalles">
                 <h3 class="producto-titulo">${producto.name}</h3>
+                <a href="#" class="producto-detalles-link" data-id="${producto.id}">Ver detalles</a>
                 <div class="precio-y-descuento">
                     ${producto.discount && producto.discount !== 0 ? `
                     <span class="precio-con-descuento">
@@ -142,8 +143,53 @@ function CargarProductos(productosElegidos) {
         contenedorProductos.append(div);
     });
 
+    // Añadir event listener a los enlaces de "Ver detalles"
+    document.querySelectorAll('.producto-detalles-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const productId = this.dataset.id;
+            fetchProductDetails(productId);
+        });
+    });
+
     ActualizarBotonesAgregar();
 }
+
+// Función para obtener los detalles del producto y mostrar el modal
+function fetchProductDetails(productId) {
+    fetch(`https://localhost:7036/api/Product/${productId}`)
+        .then(response => response.json())
+        .then(producto => {
+            Swal.fire({
+                title: producto.name,
+                html: `
+                    <p><strong>Categoría:</strong> ${producto.category.name}</p><br>
+                    <p><strong>Descripción:</strong> ${producto.description}</p>
+                `,
+                imageUrl: producto.imageUrl,
+                imageWidth: 320,
+                imageHeight: 320,
+                imageAlt: producto.name,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Ok",
+                customClass: {
+                    popup: 'custom-alert'
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching product details:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'No se pudieron cargar los detalles del producto.',
+                icon: 'error',
+                customClass: {
+                    popup: 'custom-alert'
+                }
+            });
+        });
+}
+
 
 function ActualizarBotonesAgregar() {
     botonesAgregar = document.querySelectorAll(".producto-agregar");
