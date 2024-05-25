@@ -36,7 +36,7 @@ document.addEventListener("keyup", async e => {
                     productosFiltrados = await response.json();
 
                     if (tituloPrincipal.innerText !== "Todos los productos") {
-                        productosFiltrados = productosFiltrados.filter(producto => 
+                        productosFiltrados = productosFiltrados.filter(producto =>
                             producto.categoryName === tituloPrincipal.innerText
                         );
                     }
@@ -52,7 +52,7 @@ document.addEventListener("keyup", async e => {
             if (tituloPrincipal.innerText === "Todos los productos") {
                 productosFiltrados = productos;
             } else {
-                productosFiltrados = productos.filter(producto => 
+                productosFiltrados = productos.filter(producto =>
                     producto.categoryName === tituloPrincipal.innerText
                 );
             }
@@ -125,7 +125,14 @@ function CargarProductos(productosElegidos) {
             <div class="producto-detalles">
                 <h3 class="producto-titulo">${producto.name}</h3>
                 <div class="precio-y-descuento">
+                    ${producto.discount && producto.discount !== 0 ? `
+                    <span class="precio-con-descuento">
+                        <strike>$${producto.price}</strike>
+                        <span class="producto-precio-con-descuento">$${(producto.price * (1 - producto.discount / 100)).toFixed(2)}</span>
+                    </span>
+                    ` : `
                     <p class="producto-precio">$${producto.price}</p>
+                    `}
                     ${producto.discount && producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''}
                 </div>
                 <button class="producto-agregar" id="${producto.id}">Agregar</button>
@@ -175,7 +182,7 @@ function AgregarAlCarrito(e) {
             x: "1.5rem", // horizontal axis - can be a number or a string indicating unity. eg: '2em'
             y: "1.5rem" // vertical axis - can be a number or a string indicating unity. eg: '2em'
         },
-        onClick: function(){} // Callback after click
+        onClick: function () { } // Callback after click
     }).showToast();
 
     const idBoton = e.currentTarget.id;
