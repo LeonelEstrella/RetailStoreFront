@@ -170,6 +170,13 @@ main {
     gap: 0.25rem;
 }
 
+.producto-detalles-botones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -0.2rem;
+}
+
 .ver-detalles-contenedor {
     display: inline-block;
 }
@@ -188,8 +195,8 @@ main {
 
 .producto-agregar{
     margin-bottom: rem;
-    margin-top: -0.2rem;
-    margin-right: 1rem;
+    margin-top: -0.3rem;
+    margin-right: 1.1rem;
     border: 0;
     background-color: var(---clr-white);
     color: var(---clr-main);
@@ -201,7 +208,7 @@ main {
     transition: background-color 0.2s, color 0.2s;
     align-self: end; /* Alinea el botón al final del contenedor */
     justify-self: end; /* Alinea el botón a la derecha del contenedor */
-    width: 7rem; /* Permite que el ancho del botón se ajuste automáticamente */
+    width: 9rem; /* Permite que el ancho del botón se ajuste automáticamente */
 }
 
 .producto-agregar:hover {

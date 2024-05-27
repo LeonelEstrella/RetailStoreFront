@@ -140,7 +140,10 @@ function CargarProductos(productosElegidos) {
                     `}
                     ${producto.discount && producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''}
                 </div>
-                <button class="producto-agregar" id="${producto.id}">Agregar</button>
+                <div class="producto-detalles-botones">
+                    <input type="number" min="1" value="1" class="cantidad-producto" id="cantidad-${producto.id}">
+                    <button class="producto-agregar" data-id="${producto.id}">Agregar</button>
+                </div>
             </div>
         `;
 
@@ -198,10 +201,15 @@ function fetchProductDetails(productId) {
 
 
 function ActualizarBotonesAgregar() {
-    botonesAgregar = document.querySelectorAll(".producto-agregar");
+    const botonesAgregar = document.querySelectorAll(".producto-agregar");
 
     botonesAgregar.forEach(boton => {
-        boton.addEventListener("click", AgregarAlCarrito);
+        boton.addEventListener("click", function(e) {
+            const productId = e.currentTarget.dataset.id;
+            const cantidadInput = document.querySelector(`#cantidad-${productId}`);
+            const cantidad = parseInt(cantidadInput.value);
+            AgregarAlCarrito(productId, cantidad);
+        });
     });
 }
 
@@ -216,14 +224,14 @@ if (productosEnCarritoLS) {
     productosEnCarrito = [];
 }
 
-function AgregarAlCarrito(e) {
+function AgregarAlCarrito(productId, cantidad) {
     Toastify({
         text: "Producto agregado",
         duration: 3000,
         close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
+        gravity: "top", 
+        position: "right", 
+        stopOnFocus: true, 
         style: {
             background: "linear-gradient(to right, #800080, #A35FA3)",
             borderRadius: "2rem",
@@ -231,20 +239,19 @@ function AgregarAlCarrito(e) {
             fontSize: "0.75rem"
         },
         offset: {
-            x: "1.5rem", // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-            y: "1.5rem" // vertical axis - can be a number or a string indicating unity. eg: '2em'
+            x: "1.5rem", 
+            y: "1.5rem" 
         },
-        onClick: function () { } // Callback after click
+        onClick: function () { } 
     }).showToast();
 
-    const idBoton = e.currentTarget.id;
-    const productoAgregado = productos.find(producto => producto.id === idBoton);
+    const productoAgregado = productos.find(producto => producto.id === productId);
 
-    if (productosEnCarrito.some(producto => producto.id === idBoton)) {
-        const index = productosEnCarrito.findIndex(producto => producto.id === idBoton);
-        productosEnCarrito[index].cantidad++;
+    if (productosEnCarrito.some(producto => producto.id === productId)) {
+        const index = productosEnCarrito.findIndex(producto => producto.id === productId);
+        productosEnCarrito[index].cantidad += cantidad;
     } else {
-        productoAgregado.cantidad = 1;
+        productoAgregado.cantidad = cantidad;
         productosEnCarrito.push(productoAgregado);
     }
 
@@ -252,6 +259,7 @@ function AgregarAlCarrito(e) {
 
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
 }
+
 
 function ActualizarNumerito() {
     let nuevoNumerito = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
