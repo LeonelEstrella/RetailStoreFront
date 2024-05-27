@@ -190,10 +190,10 @@ function ActualizarTotal() {
 
 // Escuchar el evento de cambio en los inputs de cantidad
 document.querySelectorAll('.cantidad-producto').forEach(input => {
-    input.addEventListener('change', function(event) {
+    input.addEventListener('change', function (event) {
         const productId = parseInt(event.target.dataset.id);
         const newQuantity = parseInt(event.target.value);
-        
+
         // Actualizar la cantidad del producto correspondiente en productosEnCarrito
         const productoIndex = productosEnCarrito.findIndex(producto => producto.id === productId);
         if (productoIndex !== -1) {
@@ -235,26 +235,33 @@ function ComprarCarrito() {
         .then(data => {
             // Hacer algo con los datos de la respuesta, si es necesario
             console.log(data);
+            // Limpiar el carrito y mostrar un mensaje de éxito
+            productosEnCarrito.length = 0;
+            localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Su compra se realizó con éxito!",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            contenedorCarritoVacio.classList.add("disabled");
+            contenedorCarritoProductos.classList.add("disabled");
+            contenedorCarritoAcciones.classList.add("disabled");
+            contenedorCarritoComprado.classList.remove("disabled");
         })
         .catch(error => {
             // Manejar errores de la solicitud
             console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'No se pudo completar la venta. Vuelva a intentarlo más tarde.',
+                icon: 'error',
+                customClass: {
+                    popup: 'custom-alert'
+                }
+            });
         });
-
-    // Limpiar el carrito y mostrar un mensaje de éxito
-    productosEnCarrito.length = 0;
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-
-    Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Su compra se realizó con éxito!",
-        showConfirmButton: false,
-        timer: 1500
-    });
-
-    contenedorCarritoVacio.classList.add("disabled");
-    contenedorCarritoProductos.classList.add("disabled");
-    contenedorCarritoAcciones.classList.add("disabled");
-    contenedorCarritoComprado.classList.remove("disabled");
 }
