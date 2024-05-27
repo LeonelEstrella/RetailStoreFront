@@ -11,6 +11,7 @@ let botonesEliminar = document.querySelectorAll(".carrito-producto-eliminar");
 const botonVaciar = document.querySelector("#carrito-acciones-vaciar");
 const contenedorTotal = document.querySelector("#total");
 const botonComprar = document.querySelector("#carrito-acciones-comprar");
+const urlCompra = "https://localhost:7036/Sale";
 
 function CargarProductosCarrito() {
     if (productosEnCarrito && productosEnCarrito.length > 0) {
@@ -24,6 +25,13 @@ function CargarProductosCarrito() {
         productosEnCarrito.forEach(producto => {
             const div = document.createElement("div");
             div.classList.add("carrito-producto");
+
+            // Verificar si el producto tiene descuento
+            let descuentoHTML = `<div class="carrito-producto-descuento" style="visibility: hidden;">Sin Descuento</div>`;
+            if (producto.discount && producto.discount > 0) {
+                descuentoHTML = `<div class="carrito-producto-descuento">Descuento x ud: ${producto.discount}%</div>`;
+            }
+
             div.innerHTML = `
                 <img class="carrito-producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
                 <div class="carrito-producto-detalle">
@@ -33,7 +41,8 @@ function CargarProductosCarrito() {
                         <input type="number" class="cantidad-producto" min="0" value="${producto.cantidad}" data-id="${producto.id}">
                     </div>
                     <div class="carrito-producto-precio">Precio x ud: $${producto.price}</div>
-                    <div class="carrito-producto-subtotal">Subtotal: $${producto.price * producto.cantidad}</div>
+                    ${descuentoHTML}
+                    <div class="carrito-producto-subtotal">Subtotal: $${(producto.price * producto.cantidad).toFixed(2)}</div>
                 </div>
                 <button class="carrito-producto-eliminar" id="${producto.id}"><i class="bi bi-trash-fill"></i></button>
             `;
@@ -178,8 +187,6 @@ function ActualizarTotal() {
     total.innerHTML = `$${totalDescuento.toFixed(2)}`;
     return totalDescuento.toFixed(2);
 }
-
-const urlCompra = "https://localhost:7036/Sale";
 
 // Escuchar el evento de cambio en los inputs de cantidad
 document.querySelectorAll('.cantidad-producto').forEach(input => {

@@ -257,19 +257,25 @@ main {
     border-radius: 1rem;
 }
 
+.carrito-producto-descuento {
+    font-size: 1rem;
+    text-align: center;
+    color: var(---clr-main);
+}
+
 .carrito-producto-detalle {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr; /* Definimos anchos específicos para las columnas */
+    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
     align-items: center;
-    
 }
 
 .carrito-producto-nombre,
 .carrito-producto-cantidad,
 .carrito-producto-precio,
 .carrito-producto-subtotal,
-.btn-ver-detalle-venta {
+.btn-ver-detalle-venta,
+.carrito-producto-descuento {
     font-size: 1rem;
     text-align: center;
 }
@@ -292,13 +298,6 @@ main {
     width: 4rem;
     height: 4rem;
     border-radius: 1rem;
-}
-
-.carrito-producto-detalle {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    align-items: center;
 }
 
 .carrito-producto small {
