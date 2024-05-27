@@ -3,9 +3,23 @@ const contenedorVentas = document.getElementById("ventas-lista");
 const inputFechaInicio = document.getElementById("fecha-inicio");
 const inputFechaFin = document.getElementById("fecha-fin");
 const botonBuscar = document.getElementById("btn-buscar");
+const spinner = document.getElementById('spinner-no-background');
+
+// Función para mostrar el spinner
+function mostrarSpinner() {
+    spinner.classList.remove('hidden');
+    spinner.classList.add('visible');
+}
+
+// Función para ocultar el spinner
+function ocultarSpinner() {
+    spinner.classList.remove('visible');
+    spinner.classList.add('hidden');
+}
 
 // Función para cargar las ventas desde el endpoint usando un rango de fechas
 async function cargarVentasDesdeFechas(fechaInicio, fechaFin) {
+    mostrarSpinner();
     try {
         // Construir la URL condicionalmente
         let urlConFechas = urlEndpoint;
@@ -64,6 +78,16 @@ async function cargarVentasDesdeFechas(fechaInicio, fechaFin) {
         }
     } catch (error) {
         console.error("Error:", error);
+        Swal.fire({
+            icon: "error",
+            title: "Error al cargar las ventas",
+            text: "Vuelva a intentarlo la búsqueda en unos minutos por favor.",
+            customClass: {
+                popup: 'custom-alert'
+            }
+        });
+    } finally {
+        ocultarSpinner();
     }
 }
 
@@ -144,7 +168,14 @@ async function cargarDetallesVenta(saleId, detallesDiv) {
         mostrarDetallesVenta(venta, detallesDiv);
     } catch (error) {
         console.error("Error:", error);
-        detallesDiv.innerHTML = `<p>Error al cargar los detalles de la venta</p>`;
+        Swal.fire({
+            title: 'Error',
+            text: 'No se pudo cargar el detalle de la venta. Intente nuevamente en unos minutos.',
+            icon: 'error',
+            customClass: {
+                popup: 'custom-alert'
+            }
+        });
     }
 }
 

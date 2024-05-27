@@ -556,3 +556,11 @@ label {
     text-transform: uppercase;
     cursor: pointer;
 }
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
