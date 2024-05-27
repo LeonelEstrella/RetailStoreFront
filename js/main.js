@@ -2,22 +2,14 @@ const urlProductos = "https://localhost:7036/api/Product";
 let productos = [];
 const spinner = document.getElementById('spinner-no-background');
 
-spinner.classList.remove('hidden');
-fetch(urlProductos)
-    .then(response => {
+async function cargarProductos(endpoint) {
+    try {
+        let response = await fetch(endpoint);
         if (!response.ok) {
             throw new Error('Error al cargar los productos');
         }
-        return response.json();
-    })
-    .then((data) => {
-        productos = data;
-        // Ocultar el spinner después de que los productos se hayan cargado correctamente
-        spinner.classList.add('hidden');
-        CargarProductos(productos);
-        console.log(productos);
-    })
-    .catch(error => {
+        return await response.json();
+    } catch (error) {
         console.error('Error:', error);
         Swal.fire({
             title: 'Error',
@@ -27,10 +19,22 @@ fetch(urlProductos)
                 popup: 'custom-alert'
             }
         });
-        // Asegúrate de ocultar el spinner en caso de error también
+        throw error;
+    } finally {
         spinner.classList.add('hidden');
-    });
+    }
+}
 
+// Cargar productos al inicio
+spinner.classList.remove('hidden');
+cargarProductos(urlProductos)
+    .then((data) => {
+        productos = data;
+        CargarProductos(productos);
+    })
+    .catch(error => {
+        // El manejo de errores ya se realiza dentro de cargarProductos
+    });
 
 
 console.log(productos);
@@ -124,35 +128,26 @@ botonesCategorias.forEach(boton => {
 
         if (categoriaId) {
             let endpoint = `${urlProductos}?categories=${categoriaId}`;
-
             try {
-                let response = await fetch(endpoint);
-                if (response.ok) {
-                    const productosBoton = await response.json();
-                    tituloPrincipal.innerText = boton.id;
-                    spinner.classList.add('hidden');
-                    CargarProductos(productosBoton);
-                } else {
-                    console.error("Error en la solicitud: " + response.statusText);
-                }
+                const productosBoton = await cargarProductos(endpoint);
+                tituloPrincipal.innerText = boton.id;
+                CargarProductos(productosBoton);
             } catch (error) {
-                console.error("Error de red: " + error.message);
-                spinner.classList.add('hidden');
-                Swal.fire({
-                    title: 'Error',
-                    text: 'No se pudieron cargar los productos. Intente recargar la página en unos minutos.',
-                    icon: 'error',
-                    customClass: {
-                        popup: 'custom-alert'
-                    }
-                });
+                // El manejo de errores ya se realiza dentro de cargarProductos
             }
         } else if (boton.id === "todos") {
             tituloPrincipal.innerText = "Todos los productos";
-            spinner.classList.add('hidden');
-            CargarProductos(productos);
+            spinner.classList.remove('hidden');
+            try {
+                const productosTodos = await cargarProductos(urlProductos);
+                productos = productosTodos;
+                CargarProductos(productos);
+            } catch (error) {
+                // El manejo de errores ya se realiza dentro de cargarProductos
+            }
         } else {
             console.error(`Categoría no encontrada: ${boton.id}`);
+            spinner.classList.add('hidden');
         }
     });
 });
@@ -188,10 +183,8 @@ function CargarProductos(productosElegidos) {
                 </div>
             </div>
         `;
-
         contenedorProductos.append(div);
     });
-
     // Añadir event listener a los enlaces de "Ver detalles"
     document.querySelectorAll('.producto-detalles-link').forEach(link => {
         link.addEventListener('click', function(event) {
