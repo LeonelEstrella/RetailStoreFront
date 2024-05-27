@@ -204,6 +204,9 @@ document.querySelectorAll('.cantidad-producto').forEach(input => {
 
 // Método para enviar la solicitud de compra
 function ComprarCarrito() {
+    // Mostrar el spinner loader
+    document.getElementById('overlay').classList.remove('hidden');
+
     // Crear la lista de productos con las cantidades actualizadas
     let listaProductos = productosEnCarrito.map(producto => ({
         productId: producto.id,
@@ -263,5 +266,9 @@ function ComprarCarrito() {
                     popup: 'custom-alert'
                 }
             });
+        })
+        .finally(() => {
+            // Ocultar el spinner loader
+            document.getElementById('overlay').classList.add('hidden');
         });
 }

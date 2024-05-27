@@ -225,6 +225,62 @@ main {
     text-align: left;
 }
 
+
+.filtro {
+    display: none;
+}
+
+/* Spinner común */
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border: 0.25em solid #ccc; /* Color de la frontera */
+    border-top: 0.25em solid #800080; /* Color de la frontera superior */
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+}
+
+/* Spinner con fondo */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo gris transparente */
+    z-index: 1000;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Spinner sin fondo */
+.spinner-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+/* Animación de giro */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /** CARRITO **/
 
 .contedor-carrito {
@@ -370,7 +426,6 @@ input {
     border:  5px solid var(---clr-main);
     font-weight: 600;
 }
-
 .filtro {
     display: none;
 }

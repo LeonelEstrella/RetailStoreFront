@@ -1,14 +1,36 @@
 const urlProductos = "https://localhost:7036/api/Product";
 let productos = [];
+const spinner = document.getElementById('spinner-no-background');
 
-// Cargar todos los productos al inicio
+spinner.classList.remove('hidden');
 fetch(urlProductos)
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al cargar los productos');
+        }
+        return response.json();
+    })
     .then((data) => {
         productos = data;
         CargarProductos(productos);
         console.log(productos);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire({
+            title: 'Error',
+            text: 'No se pudieron cargar los productos. Intente recargar la página en unos minutos.',
+            icon: 'error',
+            customClass: {
+                popup: 'custom-alert'
+            }
+        });
+    })
+    .finally(() => {
+        // Ocultar el spinner loader
+        spinner.classList.add('hidden');
     });
+
 
 console.log(productos);
 
@@ -47,6 +69,14 @@ document.addEventListener("keyup", async e => {
                 }
             } catch (error) {
                 console.error("Error de red: " + error.message);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'No se pudo realizar la búsqueda de los productos. Intente en unos minutos.',
+                    icon: 'error',
+                    customClass: {
+                        popup: 'custom-alert'
+                    }
+                });
             }
         } else {
             if (tituloPrincipal.innerText === "Todos los productos") {
@@ -87,7 +117,7 @@ const categoriaMap = {
 botonesCategorias.forEach(boton => {
     boton.addEventListener("click", async (e) => {
         const categoriaId = categoriaMap[boton.id];
-
+        spinner.classList.remove('hidden');
         botonesCategorias.forEach(boton => boton.classList.remove("active"));
         boton.classList.add("active");
 
@@ -99,12 +129,22 @@ botonesCategorias.forEach(boton => {
                 if (response.ok) {
                     const productosBoton = await response.json();
                     tituloPrincipal.innerText = boton.id;
+                    spinner.classList.add('hidden');
                     CargarProductos(productosBoton);
                 } else {
                     console.error("Error en la solicitud: " + response.statusText);
                 }
             } catch (error) {
                 console.error("Error de red: " + error.message);
+                spinner.classList.add('hidden');
+                Swal.fire({
+                    title: 'Error',
+                    text: 'No se pudieron cargar los productos. Intente recargar la página en unos minutos.',
+                    icon: 'error',
+                    customClass: {
+                        popup: 'custom-alert'
+                    }
+                });
             }
         } else if (boton.id === "todos") {
             tituloPrincipal.innerText = "Todos los productos";
