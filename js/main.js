@@ -12,6 +12,8 @@ fetch(urlProductos)
     })
     .then((data) => {
         productos = data;
+        // Ocultar el spinner después de que los productos se hayan cargado correctamente
+        spinner.classList.add('hidden');
         CargarProductos(productos);
         console.log(productos);
     })
@@ -25,11 +27,10 @@ fetch(urlProductos)
                 popup: 'custom-alert'
             }
         });
-    })
-    .finally(() => {
-        // Ocultar el spinner loader
+        // Asegúrate de ocultar el spinner en caso de error también
         spinner.classList.add('hidden');
     });
+
 
 
 console.log(productos);
@@ -148,6 +149,7 @@ botonesCategorias.forEach(boton => {
             }
         } else if (boton.id === "todos") {
             tituloPrincipal.innerText = "Todos los productos";
+            spinner.classList.add('hidden');
             CargarProductos(productos);
         } else {
             console.error(`Categoría no encontrada: ${boton.id}`);
