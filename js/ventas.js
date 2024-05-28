@@ -138,10 +138,19 @@ function mostrarVentas(ventas) {
         const btnCerrarModal = document.getElementById(btnCerrarModalId);
         const modal = document.getElementById(modalId);
         const detallesDiv = modal.querySelector(".venta-detalles");
+        const overlay = document.getElementById('overlay');
 
         btnAbrirModal.addEventListener("click", async () => {
-            await cargarDetallesVenta(venta.id, detallesDiv);
-            modal.showModal();
+            // Mostrar el spinner
+            overlay.classList.remove('hidden');
+
+            const detallesCargados = await cargarDetallesVenta(venta.id, detallesDiv);
+
+            // Ocultar el spinner
+            overlay.classList.add('hidden');
+            if (detallesCargados) {
+                modal.showModal();
+            }
         });
 
         btnCerrarModal.addEventListener("click", () => {
@@ -166,6 +175,7 @@ async function cargarDetallesVenta(saleId, detallesDiv) {
         }
         const venta = await response.json();
         mostrarDetallesVenta(venta, detallesDiv);
+        return true;
     } catch (error) {
         console.error("Error:", error);
         Swal.fire({
@@ -176,6 +186,7 @@ async function cargarDetallesVenta(saleId, detallesDiv) {
                 popup: 'custom-alert'
             }
         });
+        return false;
     }
 }
 

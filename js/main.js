@@ -178,7 +178,7 @@ function CargarProductos(productosElegidos) {
                     ${producto.discount && producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''}
                 </div>
                 <div class="producto-detalles-botones">
-                    <input type="number" min="1" value="1" class="cantidad-producto" id="cantidad-${producto.id}">
+                    <input type="number" min="1" max="99" value="1" class="cantidad-producto" id="cantidad-${producto.id}">
                     <button class="producto-agregar" data-id="${producto.id}">Agregar</button>
                 </div>
             </div>

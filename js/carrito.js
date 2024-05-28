@@ -38,7 +38,7 @@ function CargarProductosCarrito() {
                     <div class="carrito-producto-nombre">${producto.name}</div>
                     <div class="carrito-producto-cantidad">
                         Cantidad: 
-                        <input type="number" class="cantidad-producto" min="0" value="${producto.cantidad}" data-id="${producto.id}">
+                        <input type="number" class="cantidad-producto" min="0" max="99" value="${producto.cantidad}" data-id="${producto.id}">
                     </div>
                     <div class="carrito-producto-precio">Precio x ud: $${producto.price}</div>
                     ${descuentoHTML}
