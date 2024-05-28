@@ -194,6 +194,21 @@ function CargarProductos(productosElegidos) {
         });
     });
 
+    // Añadir event listeners a los inputs de cantidad
+    document.querySelectorAll('.cantidad-producto').forEach(input => {
+        input.addEventListener('input', (event) => {
+            if (event.target.value > 99) {
+                event.target.value = 99;
+            }
+        });
+
+        input.addEventListener('blur', (event) => {
+            if (event.target.value > 99) {
+                event.target.value = 99;
+            }
+        });
+    });
+
     ActualizarBotonesAgregar();
 }
 

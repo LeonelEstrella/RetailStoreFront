@@ -52,6 +52,18 @@ function CargarProductosCarrito() {
         // Agregar event listeners para los cambios en la cantidad
         const inputsCantidad = document.querySelectorAll('.cantidad-producto');
         inputsCantidad.forEach(input => {
+            input.addEventListener('input', (event) => {
+                if (event.target.value > 99) {
+                    event.target.value = 99;
+                }
+            });
+
+            input.addEventListener('blur', (event) => {
+                if (event.target.value > 99) {
+                    event.target.value = 99;
+                }
+            });
+
             input.addEventListener('change', ActualizarCantidad);
         });
     } else {
