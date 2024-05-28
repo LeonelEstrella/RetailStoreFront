@@ -151,7 +151,7 @@ main {
 }
 
 .producto-imagen {
-    width: 320px; /* Establece un tamaño fijo para la imagen */
+    width: 330px; /* Establece un tamaño fijo para la imagen */
     height: 320px; /* Establece un tamaño fijo para la imagen */
     border-radius: 1rem;
 }
