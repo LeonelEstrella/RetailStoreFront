@@ -225,12 +225,7 @@ main {
     border-radius: 1rem;
 }
 
-.carrito-producto-detalle {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-    align-items: center;
-}
+
 
 .carrito-producto-nombre,
 .carrito-producto-cantidad,
