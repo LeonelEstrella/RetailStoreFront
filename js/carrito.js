@@ -185,7 +185,10 @@ function VaciarCarrito(e) {
         if (result.isConfirmed) {
             Swal.fire({
                 text: "Tu carrito ha sido vaciado.",
-                icon: "success"
+                icon: "success",
+                customClass: {
+                    popup: 'custom-alert'
+                }
             });
             productosEnCarrito.length = 0;
             localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
@@ -259,7 +262,10 @@ function ComprarCarrito() {
                 icon: "success",
                 title: "Su compra se realizó con éxito!",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1500,
+                customClass: {
+                    popup: 'custom-alert'
+                }
             });
 
             contenedorCarritoVacio.classList.add("disabled");

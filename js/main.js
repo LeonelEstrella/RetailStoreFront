@@ -275,33 +275,80 @@ if (productosEnCarritoLS) {
 }
 
 function AgregarAlCarrito(productId, cantidad) {
-    Toastify({
-        text: "Producto agregado",
-        duration: 3000,
-        close: true,
-        gravity: "top", 
-        position: "right", 
-        stopOnFocus: true, 
-        style: {
-            background: "linear-gradient(to right, #800080, #A35FA3)",
-            borderRadius: "2rem",
-            textTransform: "uppercase",
-            fontSize: "0.75rem"
-        },
-        offset: {
-            x: "1.5rem", 
-            y: "1.5rem" 
-        },
-        onClick: function () { } 
-    }).showToast();
+    
 
     const productoAgregado = productos.find(producto => producto.id === productId);
 
     if (productosEnCarrito.some(producto => producto.id === productId)) {
         const index = productosEnCarrito.findIndex(producto => producto.id === productId);
-        productosEnCarrito[index].cantidad += cantidad;
+        const cantidadActual = productosEnCarrito[index].cantidad;
+        const nuevaCantidad = cantidadActual + cantidad;
+
+        if (nuevaCantidad > 99) {
+            productosEnCarrito[index].cantidad = 99;
+            Swal.fire({
+                title: 'Error',
+                text: 'No se puede agregar más de 99 productos al carrito.',
+                icon: 'error',
+                customClass: {
+                    popup: 'custom-alert'
+                }
+            });
+        } else {
+            productosEnCarrito[index].cantidad = nuevaCantidad;
+            Toastify({
+                text: "Producto agregado",
+                duration: 3000,
+                close: true,
+                gravity: "top", 
+                position: "right", 
+                stopOnFocus: true, 
+                style: {
+                    background: "linear-gradient(to right, #800080, #A35FA3)",
+                    borderRadius: "2rem",
+                    textTransform: "uppercase",
+                    fontSize: "0.75rem"
+                },
+                offset: {
+                    x: "1.5rem", 
+                    y: "1.5rem" 
+                },
+                onClick: function () { } 
+            }).showToast();
+        }
     } else {
-        productoAgregado.cantidad = cantidad;
+        if (cantidad > 99) {
+            productoAgregado.cantidad = 99;
+            Swal.fire({
+                title: 'Error',
+                text: 'No se puede agregar más de 99 productos al carrito.',
+                icon: 'error',
+                customClass: {
+                    popup: 'custom-alert'
+                }
+            });
+        } else {
+            productoAgregado.cantidad = cantidad;
+            Toastify({
+                text: "Producto agregado",
+                duration: 3000,
+                close: true,
+                gravity: "top", 
+                position: "right", 
+                stopOnFocus: true, 
+                style: {
+                    background: "linear-gradient(to right, #800080, #A35FA3)",
+                    borderRadius: "2rem",
+                    textTransform: "uppercase",
+                    fontSize: "0.75rem"
+                },
+                offset: {
+                    x: "1.5rem", 
+                    y: "1.5rem" 
+                },
+                onClick: function () { } 
+            }).showToast();
+        }
         productosEnCarrito.push(productoAgregado);
     }
 
