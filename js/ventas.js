@@ -122,7 +122,7 @@ function mostrarVentas(ventas) {
                 <div class="nombre">Venta N°${venta.id}</div>
                 <div class="primer-numero">Total: $${venta.totalPay.toFixed(2)}</div>
                 <div class="segundo-numero">Cantidad de Productos: ${venta.totalQuantity}</div>
-                <div class="carrito-producto-subtotal">Fecha: ${fechaFormateada}</div>
+                <div class="tercer-numero">Fecha: ${fechaFormateada}</div>
                 <button class="btn-ver-detalle-venta" id="${btnAbrirModalId}">Ver detalles</button>
                 <dialog id="${modalId}">
                     <h2 class="titulo-principal">Detalles venta: ${venta.id}</h2>

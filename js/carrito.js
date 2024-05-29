@@ -42,7 +42,7 @@ function CargarProductosCarrito() {
                     </div>
                     <div class="segundo-numero">Precio x ud: $${producto.price}</div>
                     ${descuentoHTML}
-                    <div class="carrito-producto-subtotal">Subtotal: $${(producto.price * producto.cantidad).toFixed(2)}</div>
+                    <div class="tercer-numero">Subtotal: $${(producto.price * producto.cantidad).toFixed(2)}</div>
                 </div>
                 <button class="carrito-producto-eliminar" id="${producto.id}"><i class="bi bi-trash-fill"></i></button>
             `;
@@ -119,7 +119,7 @@ function ActualizarCantidad(e) {
 }
 
 function ActualizarSubtotales() {
-    const subtotales = document.querySelectorAll('.carrito-producto-subtotal');
+    const subtotales = document.querySelectorAll('.tercer-numero');
     productosEnCarrito.forEach((producto, index) => {
         const subtotal = subtotales[index];
         subtotal.textContent = `Subtotal: $${producto.price * producto.cantidad}`;
