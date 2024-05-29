@@ -231,8 +231,7 @@ main {
 .primer-numero,
 .segundo-numero,
 .tercer-numero,
-.btn-ver-detalle-venta,
-.carrito-producto-descuento {
+.btn-ver-detalle-venta {
     font-size: 1rem;
     text-align: center;
 }
