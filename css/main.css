@@ -97,13 +97,6 @@ aside {
     margin-top: 2rem;
 }
 
-.cantidad-productos-comprados {
-    background-color: var(---clr-white);
-    color: var(---clr-main);
-    padding: 0.15rem .25rem;
-    border-radius: 0.25rem;
-}
-
 .boton-carrito.active .cantidad-productos-comprados {
     background-color: var(---clr-main);
     color: var(---clr-white);
@@ -136,10 +129,6 @@ main {
 .titulo-principal {
     margin-bottom: 2rem;
     color: var(---clr-main);
-}
-
-.filtro {
-    display: none;
 }
 
 /* Spinner común */

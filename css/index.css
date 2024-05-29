@@ -1,3 +1,10 @@
+.cantidad-productos-comprados {
+    background-color: var(---clr-white);
+    color: var(---clr-main);
+    padding: 0.15rem .25rem;
+    border-radius: 0.25rem;
+}
+
 .contenedor-producto {
     margin-top: 1rem;
     display: grid;
