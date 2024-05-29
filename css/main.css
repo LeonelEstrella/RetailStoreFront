@@ -206,14 +206,6 @@ main {
 }
 
 /** CARRITO **/
-
-
-
-.carrito-vacio,
-.carrito-comprado {
-    color: var(---clr-main);
-}
-
 .carrito-productos {
     display: flex;
     flex-direction: column;
