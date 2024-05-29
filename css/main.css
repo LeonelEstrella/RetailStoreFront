@@ -138,11 +138,6 @@ main {
     color: var(---clr-main);
 }
 
-.producto-titulo {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-}
-
 .producto-agregar{
     margin-bottom: rem;
     margin-top: -0.3rem;
