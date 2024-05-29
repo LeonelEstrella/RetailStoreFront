@@ -138,11 +138,6 @@ main {
     color: var(---clr-main);
 }
 
-.align-sweetalert-left {
-    text-align: left;
-}
-
-
 .filtro {
     display: none;
 }

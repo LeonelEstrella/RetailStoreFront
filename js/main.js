@@ -220,7 +220,7 @@ function fetchProductDetails(productId) {
             Swal.fire({
                 title: producto.name,
                 html: `
-                    <div class="align-sweetalert-left">
+                    <div class="alinear-sweetalert">
                         <p><strong>Categoría:</strong> ${producto.category.name}</p><br>
                         <p><strong>Descripción:</strong> ${producto.description}</p>
                     </div>
