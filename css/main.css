@@ -138,17 +138,6 @@ main {
     color: var(---clr-main);
 }
 
-.ver-detalles-contenedor {
-    display: inline-block;
-}
-
-.precio-y-descuento {
-    display: flex;
-    justify-content: space-between;
-    margin-right: 0.5rem;
-    flex-direction: row; /* Cambia la dirección del flex a vertical */
-}
-
 .producto-titulo {
     font-size: 1rem;
     margin-bottom: 0.5rem;
