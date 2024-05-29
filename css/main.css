@@ -225,12 +225,6 @@ main {
     border-radius: 1rem;
 }
 
-.carrito-producto-descuento {
-    font-size: 1rem;
-    text-align: center;
-    color: var(---clr-main);
-}
-
 .carrito-producto-detalle {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
