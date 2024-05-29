@@ -4,3 +4,9 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
 }
+
+.producto-imagen {
+    width: 330px; /* Establece un tamaño fijo para la imagen */
+    height: 320px; /* Establece un tamaño fijo para la imagen */
+    border-radius: 1rem;
+}

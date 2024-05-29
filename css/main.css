@@ -138,12 +138,6 @@ main {
     color: var(---clr-main);
 }
 
-.producto-imagen {
-    width: 330px; /* Establece un tamaño fijo para la imagen */
-    height: 320px; /* Establece un tamaño fijo para la imagen */
-    border-radius: 1rem;
-}
-
 .producto-detalles {
     width: 330px; /* Establece un tamaño fijo para la imagen */
     height: 140px;
