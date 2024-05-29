@@ -97,14 +97,14 @@ aside {
     margin-top: 2rem;
 }
 
-.numerito {
+.cantidad-productos-comprados {
     background-color: var(---clr-white);
     color: var(---clr-main);
     padding: 0.15rem .25rem;
     border-radius: 0.25rem;
 }
 
-.boton-carrito.active .numerito {
+.boton-carrito.active .cantidad-productos-comprados {
     background-color: var(---clr-main);
     color: var(---clr-white);
 }
