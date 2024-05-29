@@ -138,24 +138,6 @@ main {
     color: var(---clr-main);
 }
 
-.producto-agregar{
-    margin-bottom: rem;
-    margin-top: -0.3rem;
-    margin-right: 1.1rem;
-    border: 0;
-    background-color: var(---clr-white);
-    color: var(---clr-main);
-    padding: 0.4rem 1rem;
-    text-transform: uppercase;
-    border-radius: 2rem;
-    cursor: pointer;
-    border: 2px solid var(---clr-white);
-    transition: background-color 0.2s, color 0.2s;
-    align-self: end; /* Alinea el botón al final del contenedor */
-    justify-self: end; /* Alinea el botón a la derecha del contenedor */
-    width: 9rem; /* Permite que el ancho del botón se ajuste automáticamente */
-}
-
 .producto-agregar:hover {
     background-color: var(---clr-main);
     color: var(---clr-white);
