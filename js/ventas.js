@@ -119,9 +119,9 @@ function mostrarVentas(ventas) {
         div.innerHTML = `
             <i class="bi bi-receipt"></i>
             <div class="venta-producto-detalle">
-                <div class="carrito-producto-nombre">Venta N°${venta.id}</div>
-                <div class="carrito-producto-cantidad">Total: $${venta.totalPay.toFixed(2)}</div>
-                <div class="carrito-producto-precio">Cantidad de Productos: ${venta.totalQuantity}</div>
+                <div class="nombre">Venta N°${venta.id}</div>
+                <div class="primer-numero">Total: $${venta.totalPay.toFixed(2)}</div>
+                <div class="segundo-numero">Cantidad de Productos: ${venta.totalQuantity}</div>
                 <div class="carrito-producto-subtotal">Fecha: ${fechaFormateada}</div>
                 <button class="btn-ver-detalle-venta" id="${btnAbrirModalId}">Ver detalles</button>
                 <dialog id="${modalId}">

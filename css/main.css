@@ -227,9 +227,9 @@ main {
 
 
 
-.carrito-producto-nombre,
-.carrito-producto-cantidad,
-.carrito-producto-precio,
+.nombre,
+.primer-numero,
+.segundo-numero,
 .carrito-producto-subtotal,
 .btn-ver-detalle-venta,
 .carrito-producto-descuento {
@@ -237,7 +237,7 @@ main {
     text-align: center;
 }
 
-.carrito-producto-cantidad {
+.primer-numero {
     display: flex;
     align-items: center;
     justify-content: center; /* Alinea horizontalmente el texto y el input */

@@ -35,12 +35,12 @@ function CargarProductosCarrito() {
             div.innerHTML = `
                 <img class="carrito-producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
                 <div class="carrito-producto-detalle">
-                    <div class="carrito-producto-nombre">${producto.name}</div>
-                    <div class="carrito-producto-cantidad">
+                    <div class="nombre">${producto.name}</div>
+                    <div class="primer-numero">
                         Cantidad: 
                         <input type="number" class="cantidad-producto" min="0" max="99" value="${producto.cantidad}" data-id="${producto.id}">
                     </div>
-                    <div class="carrito-producto-precio">Precio x ud: $${producto.price}</div>
+                    <div class="segundo-numero">Precio x ud: $${producto.price}</div>
                     ${descuentoHTML}
                     <div class="carrito-producto-subtotal">Subtotal: $${(producto.price * producto.cantidad).toFixed(2)}</div>
                 </div>
