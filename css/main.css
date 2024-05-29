@@ -138,13 +138,6 @@ main {
     color: var(---clr-main);
 }
 
-.producto-detalles-botones {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: -0.2rem;
-}
-
 .ver-detalles-contenedor {
     display: inline-block;
 }
