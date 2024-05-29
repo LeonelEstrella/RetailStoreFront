@@ -138,11 +138,6 @@ main {
     color: var(---clr-main);
 }
 
-.producto-agregar:hover {
-    background-color: var(---clr-main);
-    color: var(---clr-white);
-}
-
 .producto-detalles-link{
     color: var(---clr-white);
     font-family: 'Rubik', sans-serif;

@@ -61,3 +61,8 @@
     justify-self: end; /* Alinea el botón a la derecha del contenedor */
     width: 9rem; /* Permite que el ancho del botón se ajuste automáticamente */
 }
+
+.producto-agregar:hover {
+    background-color: var(---clr-main);
+    color: var(---clr-white);
+}
