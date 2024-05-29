@@ -138,11 +138,6 @@ main {
     color: var(---clr-main);
 }
 
-.producto-detalles-link{
-    color: var(---clr-white);
-    font-family: 'Rubik', sans-serif;
-}
-
 .align-sweetalert-left {
     text-align: left;
 }
