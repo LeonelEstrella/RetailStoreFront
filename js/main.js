@@ -321,7 +321,7 @@ function AgregarAlCarrito(productId, cantidad) {
             productoAgregado.cantidad = 99;
             Swal.fire({
                 title: 'Error',
-                text: 'No se puede agregar más de 99 productos al carrito.',
+                text: 'No se puede agregar más de 99 unidades del mismo producto al carrito.',
                 icon: 'error',
                 customClass: {
                     popup: 'custom-alert'
