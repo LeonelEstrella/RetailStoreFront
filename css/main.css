@@ -93,11 +93,6 @@ aside {
     box-shadow: 0 -1rem 0 var(---clr-white);
 }
 
-.boton-menu > i.bi-hand-index-thumb-fill,
-.boton-menu > i.bi-hand-index-thumb{
-    transform: rotateZ(90deg);
-}
-
 .boton-carrito {
     margin-top: 2rem;
 }
