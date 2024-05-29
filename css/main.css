@@ -206,7 +206,7 @@ main {
 }
 
 /** CARRITO **/
-.carrito-productos {
+.listado-informacion {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
