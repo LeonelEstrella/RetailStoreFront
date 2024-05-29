@@ -3,6 +3,7 @@
 :root {
     ---clr-main: #800080;
     ---clr-main-ligth: #A35FA3;
+    ---clr-main-btn: #5a175a;
     ---clr-gray: #e2e2e2;
     ---clr-white: #ececec;
     ---clr-red: #961818;
@@ -323,6 +324,11 @@ main {
     cursor: pointer;
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
+}
+
+.carrito-acciones-comprar:hover {
+    background-color: var(---clr-main-btn);
+    color: var(---clr-white);
 }
 
 .disabled {
