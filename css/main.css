@@ -141,18 +141,18 @@ main {
     position: relative;
 }
 
-.spinner-border {
+.spinner-borde {
     width: 3rem;
     height: 3rem;
     top: 50%;
     left: 58%;
-    border: 0.25em solid #ccc; /* Color de la frontera */
-    border-top: 0.25em solid #800080; /* Color de la frontera superior */
+    border: 0.25em solid #ccc;
+    border-top: 0.25em solid #800080;
     border-radius: 50%;
     animation: spin 0.75s linear infinite;
 }
 
-.spinner-border-con-fondo {
+.spinner-borde-con-fondo {
     width: 3rem;
     height: 3rem;
     position: absolute; /* Cambiado a posición absoluta */
