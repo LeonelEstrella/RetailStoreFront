@@ -1,6 +1,13 @@
 const urlProductos = "https://localhost:7036/api/Product";
 let productos = [];
 const spinner = document.getElementById('spinner-no-background');
+const contenedorProductos = document.querySelector("#contenedor-productos");
+const botonesCategorias = document.querySelectorAll(".boton-categoria");
+const tituloPrincipal = document.querySelector(".titulo-principal");
+let botonesAgregar;
+const cantidadProductosComprados = document.querySelector(".cantidad-productos-comprados");
+const buscador = document.querySelector("#buscador");
+let productosFiltrados = []; // Lista para almacenar los productos filtrados
 
 async function cargarProductos(endpoint) {
     try {
@@ -33,22 +40,10 @@ cargarProductos(urlProductos)
         CargarProductos(productos);
     })
     .catch(error => {
-        // El manejo de errores ya se realiza dentro de cargarProductos
+        // Mostrar la alerta se realiza dentro de cargarProductos
     });
 
-
-console.log(productos);
-
-const contenedorProductos = document.querySelector("#contenedor-productos");
-const botonesCategorias = document.querySelectorAll(".boton-categoria");
-const tituloPrincipal = document.querySelector(".titulo-principal");
-let botonesAgregar;
-const cantidadProductosComprados = document.querySelector(".cantidad-productos-comprados");
-const buscador = document.querySelector("#buscador");
-
-let productosFiltrados = []; // Lista para almacenar los productos filtrados
-
-// Manejador del buscador
+// Buscador
 document.addEventListener("keyup", async e => {
     if (e.target.matches("#buscador")) {
         const valorBusqueda = e.target.value.toLowerCase();
@@ -97,14 +92,14 @@ document.addEventListener("keyup", async e => {
     }
 });
 
-// Limpiar el buscador al cambiar de categoría
+// Vaciar el buscador al cambiar de página
 botonesCategorias.forEach(boton => {
     boton.addEventListener("click", () => {
         buscador.value = "";
     });
 });
 
-// Mapa de categorías a IDs
+// Mapear categorias al ID correspondiente
 const categoriaMap = {
     "Electrodomésticos": 1,
     "Tecnología y Electrónica": 2,
@@ -275,8 +270,6 @@ if (productosEnCarritoLS) {
 }
 
 function AgregarAlCarrito(productId, cantidad) {
-    
-
     const productoAgregado = productos.find(producto => producto.id === productId);
 
     if (productosEnCarrito.some(producto => producto.id === productId)) {
@@ -356,7 +349,6 @@ function AgregarAlCarrito(productId, cantidad) {
 
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
 }
-
 
 function ActualizarCantidadProductosComprados() {
     let nuevaCantidadProductosComprados = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
