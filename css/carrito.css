@@ -21,3 +21,10 @@
     height: 4rem;
     border-radius: 1rem;
 }
+
+.carrito-producto-eliminar {
+    border: 0;
+    background-color: transparent;
+    color: var(---clr-red);
+    cursor: pointer;
+}

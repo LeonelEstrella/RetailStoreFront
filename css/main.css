@@ -251,13 +251,6 @@ main {
     font-size: 0.75rem;
 }
 
-.carrito-producto-eliminar {
-    border: 0;
-    background-color: transparent;
-    color: var(---clr-red);
-    cursor: pointer;
-}
-
 .carrito-acciones {
     display: flex;
     justify-content: space-between;
