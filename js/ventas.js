@@ -2,7 +2,7 @@ const urlEndpoint = "https://localhost:7036/Sale";
 const contenedorVentas = document.getElementById("ventas-lista");
 const inputFechaInicio = document.getElementById("fecha-inicio");
 const inputFechaFin = document.getElementById("fecha-fin");
-const botonBuscar = document.getElementById("btn-buscar");
+const botonBuscar = document.getElementById("boton-buscar");
 const spinner = document.getElementById('spinner-no-background');
 
 // Función para mostrar el spinner
@@ -113,8 +113,8 @@ function mostrarVentas(ventas) {
 
         // Generar IDs únicos para los botones y modales
         const modalId = `modal-${venta.id}`;
-        const btnAbrirModalId = `btn-abrir-modal-${venta.id}`;
-        const btnCerrarModalId = `btn-cerrar-modal-${venta.id}`;
+        const btnAbrirModalId = `boton-abrir-modal-${venta.id}`;
+        const btnCerrarModalId = `boton-cerrar-modal-${venta.id}`;
 
         div.innerHTML = `
             <i class="bi bi-receipt"></i>
@@ -123,11 +123,11 @@ function mostrarVentas(ventas) {
                 <div class="primer-numero">Total: $${venta.totalPay.toFixed(2)}</div>
                 <div class="segundo-numero">Cantidad de Productos: ${venta.totalQuantity}</div>
                 <div class="tercer-numero">Fecha: ${fechaFormateada}</div>
-                <button class="btn-ver-detalle-venta" id="${btnAbrirModalId}">Ver detalles</button>
+                <button class="boton-ver-detalle-venta" id="${btnAbrirModalId}">Ver detalles</button>
                 <dialog id="${modalId}">
                     <h2 class="titulo-principal">Detalles venta: ${venta.id}</h2>
                     <div class="venta-detalles"></div> <!-- Contenedor para los detalles de la venta -->
-                    <button class="btn-cerrar-modal" id="${btnCerrarModalId}">Cerrar ventana</button>
+                    <button class="boton-cerrar-modal" id="${btnCerrarModalId}">Cerrar ventana</button>
                 </dialog>
             </div>
         `;

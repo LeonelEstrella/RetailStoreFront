@@ -1,4 +1,4 @@
-.btn-ver-detalle-venta {
+.boton-ver-detalle-venta {
     font-size: 1rem;
     text-align: center;
 }
@@ -9,7 +9,7 @@
     border: 1px solid #ddd;
 }
 
-.btn-ver-detalle-venta, .btn-cerrar-modal, #btn-buscar {
+.boton-ver-detalle-venta, .boton-cerrar-modal, #boton-buscar {
     margin-bottom: rem;
     margin-top: 0.5rem;
     border: 0;
@@ -23,7 +23,7 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
-#btn-buscar{
+#boton-buscar{
     border: 0;
     width: 8vw;
     margin-left: 1rem ;
@@ -41,7 +41,7 @@
     align-items: center;
 }
 
-.btn-ver-detalle-venta {
+.boton-ver-detalle-venta {
     display: flex;
     justify-content: center;
     align-items: center;
