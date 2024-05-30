@@ -2,3 +2,16 @@
     font-size: 1rem;
     text-align: center;
 }
+
+.venta-producto {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.btn-ver-detalle-venta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}

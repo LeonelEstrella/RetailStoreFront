@@ -260,18 +260,8 @@ input {
     border:  5px solid var(---clr-main);
     font-weight: 600;
 }
-.filtro {
-    display: none;
-}
 
 /*VENTAS*/
-
-.venta-producto {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
 .btn-ver-detalle-venta, .btn-cerrar-modal, #btn-buscar {
     margin-bottom: rem;
     margin-top: 0.5rem;
@@ -284,14 +274,6 @@ input {
     cursor: pointer;
     border: 2px solid var(---clr-white);
     transition: background-color 0.2s, color 0.2s;
-}
-
-/* Opcional: Para asegurarse de que el botón tenga un tamaño y alineación adecuados */
-.btn-ver-detalle-venta {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%; /* Ajustar la altura para que coincida con las otras celdas */
 }
 
 dialog {
