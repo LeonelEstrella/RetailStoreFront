@@ -9,6 +9,43 @@ const cantidadProductosComprados = document.querySelector(".cantidad-productos-c
 const buscador = document.querySelector("#buscador");
 let productosFiltrados = []; // Lista para almacenar los productos filtrados
 
+/***SECCIÓN MENSAJES***/
+
+function mostrarError(mensaje) {
+    Swal.fire({
+        title: 'Error',
+        text: mensaje,
+        icon: 'error',
+        customClass: {
+            popup: 'custom-alert'
+        }
+    });
+}
+
+function mostrarMensajeProductoAgregado() {
+    Toastify({
+        text: "Producto agregado",
+        duration: 3000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+        style: {
+            background: "linear-gradient(to right, #800080, #A35FA3)",
+            borderRadius: "2rem",
+            textTransform: "uppercase",
+            fontSize: "0.75rem"
+        },
+        offset: {
+            x: "1.5rem",
+            y: "1.5rem"
+        },
+        onClick: function () { }
+    }).showToast();
+}
+
+/***SECCIÓN CARGA DE PRODUCTOS***/
+
 async function cargarProductos(endpoint) {
     try {
         let response = await fetch(endpoint);
@@ -18,14 +55,7 @@ async function cargarProductos(endpoint) {
         return await response.json();
     } catch (error) {
         console.error('Error:', error);
-        Swal.fire({
-            title: 'Error',
-            text: 'No se pudieron cargar los productos. Intente recargar la página en unos minutos.',
-            icon: 'error',
-            customClass: {
-                popup: 'custom-alert'
-            }
-        });
+        mostrarError("No se pudieron cargar los productos. Intente recargar la página en unos minutos.");
         throw error;
     } finally {
         spinner.classList.add('hidden');
@@ -42,6 +72,82 @@ cargarProductos(urlProductos)
     .catch(error => {
         // Mostrar la alerta se realiza dentro de cargarProductos
     });
+
+
+function CargarProductos(productosElegidos) {
+    contenedorProductos.innerHTML = "";
+    productosElegidos.forEach(producto => {
+        const div = document.createElement("div");
+        div.classList.add("producto");
+        div.innerHTML = `
+                <img class="producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
+                <div class="producto-detalles">
+                    <h3 class="producto-titulo">${producto.name}</h3>
+                    <div class="ver-detalles-contenedor">
+                        <a href="#" class="producto-detalles-link" data-id="${producto.id}">
+                            <span>Ver detalles</span>
+                        </a>
+                    </div>
+                    <div class="precio-y-descuento">
+                        ${producto.discount && producto.discount !== 0 ? `
+                        <span class="precio-con-descuento">
+                            <strike>$${producto.price}</strike>
+                            <span class="producto-precio-con-descuento">$${(producto.price * (1 - producto.discount / 100)).toFixed(2)}</span>
+                        </span>
+                        ` : `
+                        <p class="producto-precio">$${producto.price}</p>
+                        `}
+                        ${producto.discount && producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''}
+                    </div>
+                    <div class="producto-detalles-botones">
+                        <input type="number" min="1" max="99" value="1" class="cantidad-producto" id="cantidad-${producto.id}">
+                        <button class="producto-agregar" data-id="${producto.id}">Agregar</button>
+                    </div>
+                </div>
+            `;
+        contenedorProductos.append(div);
+    });
+    // Añadir event listener a los enlaces de "Ver detalles"
+    document.querySelectorAll('.producto-detalles-link').forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            const productId = this.dataset.id;
+            fetchProductDetails(productId);
+        });
+    });
+
+    // Añadir event listeners a los inputs de cantidad
+    document.querySelectorAll('.cantidad-producto').forEach(input => {
+        input.addEventListener('input', (event) => {
+            if (event.target.value > 99) {
+                event.target.value = 99;
+            }
+        });
+
+        input.addEventListener('blur', (event) => {
+            if (event.target.value > 99) {
+                event.target.value = 99;
+            }
+        });
+    });
+
+    ActualizarBotonesAgregar();
+}
+
+function ActualizarBotonesAgregar() {
+    const botonesAgregar = document.querySelectorAll(".producto-agregar");
+
+    botonesAgregar.forEach(boton => {
+        boton.addEventListener("click", function (e) {
+            const productId = e.currentTarget.dataset.id;
+            const cantidadInput = document.querySelector(`#cantidad-${productId}`);
+            const cantidad = parseInt(cantidadInput.value);
+            AgregarAlCarrito(productId, cantidad);
+        });
+    });
+}
+
+/***SECCIÓN BARRA DE BÚSQUEDA***/
 
 // Buscador
 document.addEventListener("keyup", async e => {
@@ -69,14 +175,7 @@ document.addEventListener("keyup", async e => {
                 }
             } catch (error) {
                 console.error("Error de red: " + error.message);
-                Swal.fire({
-                    title: 'Error',
-                    text: 'No se pudo realizar la búsqueda de los productos. Intente en unos minutos.',
-                    icon: 'error',
-                    customClass: {
-                        popup: 'custom-alert'
-                    }
-                });
+                mostrarError("No se pudo realizar la búsqueda de los productos. Intente en unos minutos.");
             }
         } else {
             if (tituloPrincipal.innerText === "Todos los productos") {
@@ -98,6 +197,8 @@ botonesCategorias.forEach(boton => {
         buscador.value = "";
     });
 });
+
+/***SECCIÓN SELECCIÓN POR CATEGORÍAS***/
 
 // Mapear categorias al ID correspondiente
 const categoriaMap = {
@@ -147,65 +248,7 @@ botonesCategorias.forEach(boton => {
     });
 });
 
-function CargarProductos(productosElegidos) {
-    contenedorProductos.innerHTML = "";
-    productosElegidos.forEach(producto => {
-        const div = document.createElement("div");
-        div.classList.add("producto");
-        div.innerHTML = `
-            <img class="producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
-            <div class="producto-detalles">
-                <h3 class="producto-titulo">${producto.name}</h3>
-                <div class="ver-detalles-contenedor">
-                    <a href="#" class="producto-detalles-link" data-id="${producto.id}">
-                        <span>Ver detalles</span>
-                    </a>
-                </div>
-                <div class="precio-y-descuento">
-                    ${producto.discount && producto.discount !== 0 ? `
-                    <span class="precio-con-descuento">
-                        <strike>$${producto.price}</strike>
-                        <span class="producto-precio-con-descuento">$${(producto.price * (1 - producto.discount / 100)).toFixed(2)}</span>
-                    </span>
-                    ` : `
-                    <p class="producto-precio">$${producto.price}</p>
-                    `}
-                    ${producto.discount && producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''}
-                </div>
-                <div class="producto-detalles-botones">
-                    <input type="number" min="1" max="99" value="1" class="cantidad-producto" id="cantidad-${producto.id}">
-                    <button class="producto-agregar" data-id="${producto.id}">Agregar</button>
-                </div>
-            </div>
-        `;
-        contenedorProductos.append(div);
-    });
-    // Añadir event listener a los enlaces de "Ver detalles"
-    document.querySelectorAll('.producto-detalles-link').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const productId = this.dataset.id;
-            fetchProductDetails(productId);
-        });
-    });
-
-    // Añadir event listeners a los inputs de cantidad
-    document.querySelectorAll('.cantidad-producto').forEach(input => {
-        input.addEventListener('input', (event) => {
-            if (event.target.value > 99) {
-                event.target.value = 99;
-            }
-        });
-
-        input.addEventListener('blur', (event) => {
-            if (event.target.value > 99) {
-                event.target.value = 99;
-            }
-        });
-    });
-
-    ActualizarBotonesAgregar();
-}
+/***MOSTRAR DETALLES DEL PRODUCTO***/
 
 // Función para obtener los detalles del producto y mostrar el modal
 function fetchProductDetails(productId) {
@@ -233,30 +276,11 @@ function fetchProductDetails(productId) {
         })
         .catch(error => {
             console.error('Error fetching product details:', error);
-            Swal.fire({
-                title: 'Error',
-                text: 'No se pudieron cargar los detalles del producto.',
-                icon: 'error',
-                customClass: {
-                    popup: 'custom-alert'
-                }
-            });
+            mostrarError("No se pudieron cargar los detalles del producto.");
         });
 }
 
-
-function ActualizarBotonesAgregar() {
-    const botonesAgregar = document.querySelectorAll(".producto-agregar");
-
-    botonesAgregar.forEach(boton => {
-        boton.addEventListener("click", function(e) {
-            const productId = e.currentTarget.dataset.id;
-            const cantidadInput = document.querySelector(`#cantidad-${productId}`);
-            const cantidad = parseInt(cantidadInput.value);
-            AgregarAlCarrito(productId, cantidad);
-        });
-    });
-}
+/***SECCIÓN CARGA DEL CARRITO ***/
 
 let productosEnCarrito;
 
@@ -279,68 +303,18 @@ function AgregarAlCarrito(productId, cantidad) {
 
         if (nuevaCantidad > 99) {
             productosEnCarrito[index].cantidad = 99;
-            Swal.fire({
-                title: 'Error',
-                text: 'No se puede agregar más de 99 unidades del mismo producto al carrito.',
-                icon: 'error',
-                customClass: {
-                    popup: 'custom-alert'
-                }
-            });
+            mostrarError("No se puede agregar más de 99 unidades del mismo producto al carrito.");
         } else {
             productosEnCarrito[index].cantidad = nuevaCantidad;
-            Toastify({
-                text: "Producto agregado",
-                duration: 3000,
-                close: true,
-                gravity: "top", 
-                position: "right", 
-                stopOnFocus: true, 
-                style: {
-                    background: "linear-gradient(to right, #800080, #A35FA3)",
-                    borderRadius: "2rem",
-                    textTransform: "uppercase",
-                    fontSize: "0.75rem"
-                },
-                offset: {
-                    x: "1.5rem", 
-                    y: "1.5rem" 
-                },
-                onClick: function () { } 
-            }).showToast();
+            mostrarMensajeProductoAgregado();
         }
     } else {
         if (cantidad > 99) {
             productoAgregado.cantidad = 99;
-            Swal.fire({
-                title: 'Error',
-                text: 'No se puede agregar más de 99 unidades del mismo producto al carrito.',
-                icon: 'error',
-                customClass: {
-                    popup: 'custom-alert'
-                }
-            });
+            mostrarError("No se puede agregar más de 99 unidades del mismo producto al carrito.");
         } else {
             productoAgregado.cantidad = cantidad;
-            Toastify({
-                text: "Producto agregado",
-                duration: 3000,
-                close: true,
-                gravity: "top", 
-                position: "right", 
-                stopOnFocus: true, 
-                style: {
-                    background: "linear-gradient(to right, #800080, #A35FA3)",
-                    borderRadius: "2rem",
-                    textTransform: "uppercase",
-                    fontSize: "0.75rem"
-                },
-                offset: {
-                    x: "1.5rem", 
-                    y: "1.5rem" 
-                },
-                onClick: function () { } 
-            }).showToast();
+            mostrarMensajeProductoAgregado();
         }
         productosEnCarrito.push(productoAgregado);
     }
