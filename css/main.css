@@ -225,13 +225,10 @@ main {
     border-radius: 1rem;
 }
 
-
-
 .nombre,
 .primer-numero,
 .segundo-numero,
-.tercer-numero,
-.btn-ver-detalle-venta {
+.tercer-numero {
     font-size: 1rem;
     text-align: center;
 }
@@ -248,12 +245,6 @@ main {
     width: 4rem; /* Ajusta el ancho del input */
     margin-left: 0.5rem; /* Espacio entre el texto y el input */
     text-align: center; /* Centra el texto dentro del input */
-}
-
-.carrito-producto-imagen {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 1rem;
 }
 
 .carrito-producto small {
