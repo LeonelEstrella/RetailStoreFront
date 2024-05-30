@@ -205,7 +205,6 @@ main {
     gap: 1.5rem;
 }
 
-/** CARRITO **/
 .listado-informacion {
     display: flex;
     flex-direction: column;
@@ -261,17 +260,7 @@ input {
     font-weight: 600;
 }
 
-/*VENTAS*/
-
 /* Posición del sweetalert2 */
 .custom-alert {
     left: 10%;
-}
-
-.hidden {
-    display: none;
-}
-
-.visible {
-    display: block;
 }

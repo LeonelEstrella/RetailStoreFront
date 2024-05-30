@@ -180,7 +180,10 @@ function VaciarCarrito(e) {
         cancelButtonColor: "#d33",
         confirmButtonText: "Confirmar",
         cancelButtonText: "Cancelar",
-        reverseButtons: true
+        reverseButtons: true,
+        customClass: {
+            popup: 'custom-alert'
+        }
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
@@ -260,7 +263,7 @@ function ComprarCarrito() {
             Swal.fire({
                 position: "center",
                 icon: "success",
-                title: "Su compra se realizó con éxito!",
+                title: "¡Su compra se realizó con éxito!",
                 showConfirmButton: false,
                 timer: 1500,
                 customClass: {
