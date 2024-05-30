@@ -251,51 +251,6 @@ main {
     font-size: 0.75rem;
 }
 
-.carrito-acciones-vaciar {
-    border: 0;
-    background-color: var(---clr-gray);
-    padding: 1rem;
-    border-radius: 1rem;
-    color: var(---clr-main);
-    text-transform: uppercase;
-    cursor: pointer;
-}
-
-.carrito-acciones-derecha {
-    display: flex;
-}
-
-.carrito-acciones-total {
-    display: flex;
-    background-color: var(---clr-gray);
-    padding: 1rem;
-    color: var(---clr-main);
-    text-transform: uppercase;
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    gap: 1rem;
-}
-
-.carrito-acciones-comprar {
-    border: 0;
-    background-color: var(---clr-main);
-    padding: 1rem;
-    color: var(---clr-white);
-    text-transform: uppercase;
-    cursor: pointer;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-}
-
-.carrito-acciones-comprar:hover {
-    background-color: var(---clr-main-btn);
-    color: var(---clr-white);
-}
-
-.disabled {
-    display: none;
-}
-
 .encabezado {
     display: flex;
     justify-content: space-between;
