@@ -251,11 +251,6 @@ main {
     font-size: 0.75rem;
 }
 
-.encabezado {
-    display: flex;
-    justify-content: space-between;
-}
-
 input {
     background-color: var(---clr-white);
     width: 20vw;

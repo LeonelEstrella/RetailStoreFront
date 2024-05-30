@@ -82,3 +82,8 @@
 .alinear-sweetalert {
     text-align: left;
 }
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+}
