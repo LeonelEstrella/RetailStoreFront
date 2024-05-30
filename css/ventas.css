@@ -9,11 +9,51 @@
     border: 1px solid #ddd;
 }
 
+.btn-ver-detalle-venta, .btn-cerrar-modal, #btn-buscar {
+    margin-bottom: rem;
+    margin-top: 0.5rem;
+    border: 0;
+    background-color: var(---clr-white);
+    color: var(---clr-main);
+    padding: .5rem;
+    text-transform: uppercase;
+    border-radius: 2rem;
+    cursor: pointer;
+    border: 2px solid var(---clr-white);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#btn-buscar{
+    border: 0;
+    width: 8vw;
+    margin-left: 1rem ;
+    background-color: var(---clr-main);
+    padding: 1rem;
+    color: var(---clr-white);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.venta-producto-detalle {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr auto; /* Añadido 'auto' para el botón */
+    gap: 1rem;
+    align-items: center;
+}
+
 .btn-ver-detalle-venta {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+#fecha-inicio, #fecha-fin {
+    width: 15vw;
+}
+
+label {
+    margin: 1rem;
 }
 
 dialog {
