@@ -251,11 +251,6 @@ main {
     font-size: 0.75rem;
 }
 
-.carrito-acciones {
-    display: flex;
-    justify-content: space-between;
-}
-
 .carrito-acciones-vaciar {
     border: 0;
     background-color: var(---clr-gray);

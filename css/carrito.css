@@ -28,3 +28,8 @@
     color: var(---clr-red);
     cursor: pointer;
 }
+
+.carrito-acciones {
+    display: flex;
+    justify-content: space-between;
+}
