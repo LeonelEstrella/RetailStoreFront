@@ -8,6 +8,7 @@ let botonesAgregar;
 const cantidadProductosComprados = document.querySelector(".cantidad-productos-comprados");
 const buscador = document.querySelector("#buscador");
 let productosFiltrados = []; // Lista para almacenar los productos filtrados
+const overlay = document.getElementById('overlay');
 
 /***SECCIÓN MENSAJES***/
 
@@ -112,7 +113,7 @@ function CargarProductos(productosElegidos) {
         link.addEventListener('click', function (event) {
             event.preventDefault();
             const productId = this.dataset.id;
-            fetchProductDetails(productId);
+            MostrarDetallesProducto(productId);
         });
     });
 
@@ -251,10 +252,14 @@ botonesCategorias.forEach(boton => {
 /***MOSTRAR DETALLES DEL PRODUCTO***/
 
 // Función para obtener los detalles del producto y mostrar el modal
-function fetchProductDetails(productId) {
-    fetch(`https://localhost:7036/api/Product/${productId}`)
+function MostrarDetallesProducto(productId) {
+    // Mostrar el spinner
+    overlay.classList.remove('hidden');
+    fetch(`${urlProductos}/${productId}`)
         .then(response => response.json())
         .then(producto => {
+            // Ocultar el spinner
+            overlay.classList.add('hidden');
             Swal.fire({
                 title: producto.name,
                 html: `
@@ -277,6 +282,8 @@ function fetchProductDetails(productId) {
         .catch(error => {
             console.error('Error fetching product details:', error);
             mostrarError("No se pudieron cargar los detalles del producto.");
+            // Ocultar el spinner
+            overlay.classList.add('hidden');
         });
 }
 
