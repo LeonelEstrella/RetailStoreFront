@@ -1,8 +1,5 @@
 let productosEnCarrito = localStorage.getItem("productos-en-carrito");
 productosEnCarrito = JSON.parse(productosEnCarrito);
-
-console.log(productosEnCarrito);
-
 const contenedorCarritoVacio = document.querySelector("#carrito-vacio");
 const contenedorCarritoProductos = document.querySelector("#listado-informacion");
 const contenedorCarritoAcciones = document.querySelector("#carrito-acciones");
@@ -12,6 +9,28 @@ const botonVaciar = document.querySelector("#carrito-acciones-vaciar");
 const contenedorTotal = document.querySelector("#total");
 const botonComprar = document.querySelector("#carrito-acciones-comprar");
 const urlCompra = "https://localhost:7036/Sale";
+
+function MostrarMensajeProductoEliminado(){
+    Toastify({
+        text: "Producto eliminado",
+        duration: 3000,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to right, #A35FA3, #ececec)",
+            borderRadius: "2rem",
+            textTransform: "uppercase",
+            fontSize: "0.75rem"
+        },
+        offset: {
+            x: "1.5rem", // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+            y: "1.5rem" // vertical axis - can be a number or a string indicating unity. eg: '2em'
+        },
+        onClick: function () { } // Callback after click
+    }).showToast();
+}
 
 function CargarProductosCarrito() {
     if (productosEnCarrito && productosEnCarrito.length > 0) {
@@ -26,7 +45,7 @@ function CargarProductosCarrito() {
             const div = document.createElement("div");
             div.classList.add("carrito-producto");
 
-            // Verificar si el producto tiene descuento
+            // Verifica si el producto tiene descuento
             let descuentoHTML = `<div class="carrito-producto-descuento" style="visibility: hidden;">Sin Descuento</div>`;
             if (producto.discount && producto.discount > 0) {
                 descuentoHTML = `<div class="carrito-producto-descuento">Descuento x ud: ${producto.discount}%</div>`;
@@ -49,7 +68,7 @@ function CargarProductosCarrito() {
             contenedorCarritoProductos.append(div);
         });
 
-        // Agregar event listeners para los cambios en la cantidad
+        // Event listeners para los cambios de cantidad
         const inputsCantidad = document.querySelectorAll('.cantidad-producto');
         inputsCantidad.forEach(input => {
             input.addEventListener('input', (event) => {
@@ -87,25 +106,7 @@ function ActualizarCantidad(e) {
         if (cantidadNueva === 0) {
             // Eliminar producto si la cantidad es 0
             productosEnCarrito.splice(index, 1);
-            Toastify({
-                text: "Producto eliminado",
-                duration: 3000,
-                close: true,
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-                    background: "linear-gradient(to right, #A35FA3, #ececec)",
-                    borderRadius: "2rem",
-                    textTransform: "uppercase",
-                    fontSize: "0.75rem"
-                },
-                offset: {
-                    x: "1.5rem", // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: "1.5rem" // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                onClick: function () { } // Callback after click
-            }).showToast();
+            MostrarMensajeProductoEliminado();
         } else {
             productosEnCarrito[index].cantidad = cantidadNueva;
         }
@@ -137,27 +138,7 @@ function ActualizarBotonesEliminar() {
 }
 
 function EliminarDelCarrito(e) {
-
-    Toastify({
-        text: "Producto eliminado",
-        duration: 3000,
-        close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        style: {
-            background: "linear-gradient(to right, #A35FA3, #ececec)",
-            borderRadius: "2rem",
-            textTransform: "uppercase",
-            fontSize: "0.75rem"
-        },
-        offset: {
-            x: "1.5rem", // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-            y: "1.5rem" // vertical axis - can be a number or a string indicating unity. eg: '2em'
-        },
-        onClick: function () { } // Callback after click
-    }).showToast();
-
+    MostrarMensajeProductoEliminado();
     const idBoton = e.currentTarget.id;
     const index = productosEnCarrito.findIndex(producto => producto.id === idBoton);
     productosEnCarrito.splice(index, 1);
@@ -206,7 +187,7 @@ function ActualizarTotal() {
     return totalDescuento.toFixed(2);
 }
 
-// Escuchar el evento de cambio en los inputs de cantidad
+// Event listener para los cambios de cantidad
 document.querySelectorAll('.cantidad-producto').forEach(input => {
     input.addEventListener('change', function (event) {
         const productId = parseInt(event.target.dataset.id);
@@ -220,7 +201,7 @@ document.querySelectorAll('.cantidad-producto').forEach(input => {
     });
 });
 
-// Método para enviar la solicitud de compra
+// POST de compra
 function ComprarCarrito() {
     // Mostrar el spinner loader
     document.getElementById('overlay').classList.remove('hidden');
@@ -244,18 +225,14 @@ function ComprarCarrito() {
         body: JSON.stringify(nuevaVenta)
     };
 
-    console.log(opciones.body);
-
     fetch(urlCompra, opciones)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Error al enviar la solicitud');
             }
-            return response.json(); // Convertir la respuesta a JSON
+            return response.json();
         })
         .then(data => {
-            // Hacer algo con los datos de la respuesta, si es necesario
-            console.log(data);
             // Limpiar el carrito y mostrar un mensaje de éxito
             productosEnCarrito.length = 0;
             localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
@@ -277,7 +254,6 @@ function ComprarCarrito() {
             contenedorCarritoComprado.classList.remove("disabled");
         })
         .catch(error => {
-            // Manejar errores de la solicitud
             console.error('Error:', error);
             Swal.fire({
                 title: 'Error',

@@ -23,7 +23,7 @@ function MostrarError(mensaje) {
     });
 }
 
-function mostrarMensajeProductoAgregado() {
+function MostrarMensajeProductoAgregado() {
     Toastify({
         text: "Producto agregado",
         duration: 3000,
@@ -313,7 +313,7 @@ function AgregarAlCarrito(productId, cantidad) {
             MostrarError("No se puede agregar más de 99 unidades del mismo producto al carrito.");
         } else {
             productosEnCarrito[index].cantidad = nuevaCantidad;
-            mostrarMensajeProductoAgregado();
+            MostrarMensajeProductoAgregado();
         }
     } else {
         if (cantidad > 99) {
@@ -321,7 +321,7 @@ function AgregarAlCarrito(productId, cantidad) {
             MostrarError("No se puede agregar más de 99 unidades del mismo producto al carrito.");
         } else {
             productoAgregado.cantidad = cantidad;
-            mostrarMensajeProductoAgregado();
+            MostrarMensajeProductoAgregado();
         }
         productosEnCarrito.push(productoAgregado);
     }
