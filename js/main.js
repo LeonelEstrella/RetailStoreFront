@@ -12,7 +12,7 @@ const overlay = document.getElementById('overlay');
 
 /***SECCIÓN MENSAJES***/
 
-function mostrarError(mensaje) {
+function MostrarError(mensaje) {
     Swal.fire({
         title: 'Error',
         text: mensaje,
@@ -47,7 +47,7 @@ function mostrarMensajeProductoAgregado() {
 
 /***SECCIÓN CARGA DE PRODUCTOS***/
 
-async function cargarProductos(endpoint) {
+async function ObtenerProductos(endpoint) {
     try {
         let response = await fetch(endpoint);
         if (!response.ok) {
@@ -56,7 +56,7 @@ async function cargarProductos(endpoint) {
         return await response.json();
     } catch (error) {
         console.error('Error:', error);
-        mostrarError("No se pudieron cargar los productos. Intente recargar la página en unos minutos.");
+        MostrarError("No se pudieron cargar los productos. Intente recargar la página en unos minutos.");
         throw error;
     } finally {
         spinner.classList.add('hidden');
@@ -65,13 +65,13 @@ async function cargarProductos(endpoint) {
 
 // Cargar productos al inicio
 spinner.classList.remove('hidden');
-cargarProductos(urlProductos)
+ObtenerProductos(urlProductos)
     .then((data) => {
         productos = data;
         CargarProductos(productos);
     })
     .catch(error => {
-        // Mostrar la alerta se realiza dentro de cargarProductos
+        // Mostrar la alerta se realiza dentro de ObtenerProductos
     });
 
 
@@ -176,7 +176,7 @@ document.addEventListener("keyup", async e => {
                 }
             } catch (error) {
                 console.error("Error de red: " + error.message);
-                mostrarError("No se pudo realizar la búsqueda de los productos. Intente en unos minutos.");
+                MostrarError("No se pudo realizar la búsqueda de los productos. Intente en unos minutos.");
             }
         } else {
             if (tituloPrincipal.innerText === "Todos los productos") {
@@ -226,21 +226,21 @@ botonesCategorias.forEach(boton => {
         if (categoriaId) {
             let endpoint = `${urlProductos}?categories=${categoriaId}`;
             try {
-                const productosBoton = await cargarProductos(endpoint);
+                const productosBoton = await ObtenerProductos(endpoint);
                 tituloPrincipal.innerText = boton.id;
                 CargarProductos(productosBoton);
             } catch (error) {
-                // El manejo de errores ya se realiza dentro de cargarProductos
+                // El manejo de errores ya se realiza dentro de ObtenerProductos
             }
         } else if (boton.id === "todos") {
             tituloPrincipal.innerText = "Todos los productos";
             spinner.classList.remove('hidden');
             try {
-                const productosTodos = await cargarProductos(urlProductos);
+                const productosTodos = await ObtenerProductos(urlProductos);
                 productos = productosTodos;
                 CargarProductos(productos);
             } catch (error) {
-                // El manejo de errores ya se realiza dentro de cargarProductos
+                // El manejo de errores ya se realiza dentro de ObtenerProductos
             }
         } else {
             console.error(`Categoría no encontrada: ${boton.id}`);
@@ -281,7 +281,7 @@ function MostrarDetallesProducto(productId) {
         })
         .catch(error => {
             console.error('Error fetching product details:', error);
-            mostrarError("No se pudieron cargar los detalles del producto.");
+            MostrarError("No se pudieron cargar los detalles del producto.");
             // Ocultar el spinner
             overlay.classList.add('hidden');
         });
@@ -310,7 +310,7 @@ function AgregarAlCarrito(productId, cantidad) {
 
         if (nuevaCantidad > 99) {
             productosEnCarrito[index].cantidad = 99;
-            mostrarError("No se puede agregar más de 99 unidades del mismo producto al carrito.");
+            MostrarError("No se puede agregar más de 99 unidades del mismo producto al carrito.");
         } else {
             productosEnCarrito[index].cantidad = nuevaCantidad;
             mostrarMensajeProductoAgregado();
@@ -318,7 +318,7 @@ function AgregarAlCarrito(productId, cantidad) {
     } else {
         if (cantidad > 99) {
             productoAgregado.cantidad = 99;
-            mostrarError("No se puede agregar más de 99 unidades del mismo producto al carrito.");
+            MostrarError("No se puede agregar más de 99 unidades del mismo producto al carrito.");
         } else {
             productoAgregado.cantidad = cantidad;
             mostrarMensajeProductoAgregado();
