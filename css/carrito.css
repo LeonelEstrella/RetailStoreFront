@@ -44,6 +44,11 @@
     cursor: pointer;
 }
 
+.carrito-acciones-vaciar:hover {
+    background-color: var(---clr-main);
+    color: var(---clr-white);
+}
+
 .carrito-acciones-derecha {
     display: flex;
 }

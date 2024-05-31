@@ -1,6 +1,10 @@
 .boton-ver-detalle-venta {
-    font-size: 1rem;
     text-align: center;
+}
+
+.boton-ver-detalle-venta:hover, .boton-cerrar-modal:hover {
+    background-color: var(---clr-main);
+    color: var(---clr-white);
 }
 
 .venta-producto {
@@ -32,6 +36,11 @@
     color: var(---clr-white);
     text-transform: uppercase;
     cursor: pointer;
+}
+
+#boton-buscar:hover {
+    background-color: var(---clr-main-btn);
+    color: var(---clr-white);
 }
 
 .venta-producto-detalle {
