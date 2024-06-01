@@ -5,6 +5,7 @@
 .boton-ver-detalle-venta:hover, .boton-cerrar-modal:hover {
     background-color: var(---clr-main);
     color: var(---clr-white);
+    border: 2px solid var(---clr-main);
 }
 
 .venta-producto {
