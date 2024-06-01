@@ -53,17 +53,6 @@
     display: flex;
 }
 
-.carrito-acciones-total {
-    display: flex;
-    background-color: var(--clr-gray);
-    padding: 1rem;
-    color: var(--clr-main);
-    text-transform: uppercase;
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    gap: 1rem;
-}
-
 .carrito-acciones-comprar {
     border: 0;
     background-color: var(--clr-main);
@@ -71,8 +60,7 @@
     color: var(--clr-white);
     text-transform: uppercase;
     cursor: pointer;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    border-radius: 1rem;
 }
 
 .carrito-acciones-comprar:hover {
@@ -88,6 +76,16 @@
     color: var(--clr-red);
 }
 
+.carrito-resumen-compra-contenedor {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.espaciador-invisible {
+    flex-grow: 1;
+}
+
 .carrito-resumen-compra {
     background-color: var(--clr-gray);
     padding: 1rem;
@@ -96,8 +94,7 @@
     border-radius: 1rem;
     gap: 1rem;
     width: 100%;
-    max-width: 300px;
+    max-width: 320px;
     margin-bottom: 1rem;
     box-sizing: border-box;
-    left: 1000px;
 }

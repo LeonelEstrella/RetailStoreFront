@@ -51,7 +51,7 @@ function CargarProductosCarrito() {
             // Verifica si el producto tiene descuento
             let descuentoHTML = `<div class="carrito-producto-descuento" style="visibility: hidden;">Sin Descuento</div>`;
             if (producto.discount && producto.discount > 0) {
-                descuentoHTML = `<div class="carrito-producto-descuento">Descuento x ud: ${producto.discount}%</div>`;
+                descuentoHTML = `<div class="carrito-producto-descuento">Descuento: ${producto.discount}%</div>`;
             }
 
             div.innerHTML = `
@@ -62,7 +62,7 @@ function CargarProductosCarrito() {
                         Cantidad: 
                         <input type="number" class="cantidad-producto" min="0" max="99" value="${producto.cantidad}" data-id="${producto.id}">
                     </div>
-                    <div class="segundo-numero">Precio x ud: $${producto.price}</div>
+                    <div class="segundo-numero">Precio por unidad: $${producto.price}</div>
                     ${descuentoHTML}
                     <div class="tercer-numero">Subtotal: $${(producto.price * producto.cantidad).toFixed(2)}</div>
                 </div>
@@ -219,7 +219,7 @@ function ActualizarTotales() {
 
     // Calcula el total con IVA incluido
     let totalConIVA = subtotal - totalDescuento + totalIVA;
-    document.getElementById('total').innerHTML = `$${totalConIVA.toFixed(2)}`;
+    document.getElementById('total').innerHTML = `<b>Total:</b> $${totalConIVA.toFixed(2)}`;
     return totalConIVA.toFixed(2);
 }
 

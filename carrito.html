@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="./css/carrito.css">
     <title>Carrito</title>
 </head>
+
 <body>
     <div class="wrapper">
         <aside>
@@ -42,24 +44,26 @@
                 <div id="listado-informacion" class="listado-informacion disabled">
                     <!--Esto se completa con JS-->
                 </div>
-                <div class="carrito-resumen-compra">
-                    <p id="subtotal"></p>
-                    <p id="descuentoTotal">Descuento total: <span id="numeroDescuentoTotal"></span></p>
-                    <p id="iva"></p>
+                <div class="carrito-resumen-compra-contenedor">
+                    <div class="espaciador-invisible"></div>
+                    <div class="carrito-resumen-compra">
+                        <p>Resumen</p><br>
+                        <p id="subtotal"></p>
+                        <p id="descuentoTotal">Descuento total: <span id="numeroDescuentoTotal"></span></p>
+                        <p id="iva"></p><br>
+                        <p id="total"></p>
+                    </div>
                 </div>
                 <div id="carrito-acciones" class="carrito-acciones disabled">
                     <div class="carrito-acciones-izquierda">
                         <button class="carrito-acciones-vaciar" id="carrito-acciones-vaciar">Vaciar carrito</button>
                     </div>
                     <div class="carrito-acciones-derecha">
-                        <div class="carrito-acciones-total">
-                            <p>Total:</p>
-                            <p id="total"></p>
-                        </div>
                         <button class="carrito-acciones-comprar" id="carrito-acciones-comprar">Comprar ahora</button>
                     </div>
                 </div>
-                <p id="carrito-comprado" class="carrito-comprado disabled">¡Muchas gracias por tu compra! <i class="bi bi-emoji-laughing"></i></p>
+                <p id="carrito-comprado" class="carrito-comprado disabled">¡Muchas gracias por tu compra! <i
+                        class="bi bi-emoji-laughing"></i></p>
             </div>
             <div id="overlay" class="overlay hidden">
                 <div class="spinner">
@@ -74,4 +78,5 @@
     <script src="./js/carrito.js"></script>
     <script src="./js/main.js"></script>
 </body>
+
 </html>
