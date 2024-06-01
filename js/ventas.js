@@ -6,22 +6,33 @@ const botonBuscar = document.getElementById("boton-buscar");
 const spinner = document.getElementById('spinner-no-background');
 
 // Función para mostrar el spinner
-function mostrarSpinner() {
+function MostrarSpinner() {
     spinner.classList.remove('hidden');
     spinner.classList.add('visible');
 }
 
 // Función para ocultar el spinner
-function ocultarSpinner() {
+function OcultarSpinner() {
     spinner.classList.remove('visible');
     spinner.classList.add('hidden');
 }
 
-// Función para cargar las ventas desde el endpoint usando un rango de fechas
-async function cargarVentasDesdeFechas(fechaInicio, fechaFin) {
-    mostrarSpinner();
+function MostrarMensaje(titulo, mensaje, icono) {
+    Swal.fire({
+        title: titulo,
+        text: mensaje,
+        icon: icono,
+        customClass: {
+            popup: 'custom-alert'
+        }
+    });
+}
+
+// Cargar las ventas
+async function CargarVentasDesdeFechas(fechaInicio, fechaFin) {
+    MostrarSpinner();
     try {
-        // Construir la URL condicionalmente
+        // Construir la URL dependiendo de los datos proporcionados
         let urlConFechas = urlEndpoint;
         const params = [];
 
@@ -36,71 +47,43 @@ async function cargarVentasDesdeFechas(fechaInicio, fechaFin) {
             urlConFechas += '?' + params.join('&');
         }
 
-        console.log(urlConFechas);
         const response = await fetch(urlConFechas);
         if (!response.ok) {
             if (response.status === 400) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error al realizar la búsqueda",
-                    text: "La fecha de inicio no puede ser mayor a la fecha de fin.",
-                    customClass: {
-                        popup: 'custom-alert'
-                    }
-                });
+                throw new Error(`HTTP error! status: ${response.status}`);
             } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error al cargar las ventas",
-                    text: "Vuelva a intentar realizar la búsqueda por favor.",
-                    customClass: {
-                        popup: 'custom-alert'
-                    }
-                });
+                throw new Error("No se pudo cargar la información de las ventas. Intente nuevamente en unos minutos.");
             }
-            throw new Error("Error al cargar las ventas");
         }
 
         const ventas = await response.json();
         if (ventas.length === 0) {
-            Swal.fire({
-                icon: "info",
-                title: "Sin ventas",
-                text: "No se encontraron ventas en las fechas especificadas.",
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "Confirmar",
-                customClass: {
-                    popup: 'custom-alert'
-                }
-            });
+            MostrarMensaje("Sin ventas", "No se encontraron ventas en las fechas especificadas.", "info");
         } else {
-            mostrarVentas(ventas);
+            MostrarVentas(ventas);
         }
     } catch (error) {
         console.error("Error:", error);
-        Swal.fire({
-            icon: "error",
-            title: "Error al cargar las ventas",
-            text: "Vuelva a intentarlo la búsqueda en unos minutos por favor.",
-            customClass: {
-                popup: 'custom-alert'
-            }
-        });
+        if (error.message.includes('status: 400')) {
+            MostrarMensaje("Error", "Los datos propiciados no son correctos. La fecha de inicio no puede ser mayor a la fecha de fin.", "error");
+        } else {
+            MostrarMensaje("Error", "No se pudo cargar la información de las ventas. Intente nuevamente en unos minutos.", "error");
+        }
     } finally {
-        ocultarSpinner();
+        OcultarSpinner();
     }
 }
 
-function handleBuscarClick() {
+function ManejadorBuscarClick() {
     const fechaInicio = inputFechaInicio.value;
     const fechaFin = inputFechaFin.value;
 
-    // Llamar a la función para cargar las ventas, pasando las fechas según estén disponibles
-    cargarVentasDesdeFechas(fechaInicio || null, fechaFin || null);
+    // Cargar las ventas según los datos proporcionados
+    CargarVentasDesdeFechas(fechaInicio || null, fechaFin || null);
 }
 
-// Función para mostrar las ventas en el HTML
-function mostrarVentas(ventas) {
+// Mostrar las ventas
+function MostrarVentas(ventas) {
     contenedorVentas.innerHTML = ""; // Limpiar el contenido previo
 
     ventas.forEach(venta => {
@@ -111,7 +94,7 @@ function mostrarVentas(ventas) {
         div.classList.add("venta-producto");
         div.dataset.id = venta.id;
 
-        // Generar IDs únicos para los botones y modales
+        // Generar IDs para los botones y modales
         const modalId = `modal-${venta.id}`;
         const btnAbrirModalId = `boton-abrir-modal-${venta.id}`;
         const btnCerrarModalId = `boton-cerrar-modal-${venta.id}`;
@@ -144,7 +127,7 @@ function mostrarVentas(ventas) {
             // Mostrar el spinner
             overlay.classList.remove('hidden');
 
-            const detallesCargados = await cargarDetallesVenta(venta.id, detallesDiv);
+            const detallesCargados = await CargarDetallesVenta(venta.id, detallesDiv);
 
             // Ocultar el spinner
             overlay.classList.add('hidden');
@@ -157,7 +140,7 @@ function mostrarVentas(ventas) {
             modal.close();
         });
 
-        // Evento para cerrar el modal al hacer clic fuera de él
+        // Evento para cerrar el modal al hacer click fuera
         modal.addEventListener("click", (event) => {
             if (event.target === modal) {
                 modal.close();
@@ -166,32 +149,25 @@ function mostrarVentas(ventas) {
     });
 }
 
-// Función para cargar los detalles de una venta específica desde el endpoint
-async function cargarDetallesVenta(saleId, detallesDiv) {
+// Mostrar detalles de una venta específica
+async function CargarDetallesVenta(saleId, detallesDiv) {
     try {
         const response = await fetch(`${urlEndpoint}/${saleId}`);
         if (!response.ok) {
             throw new Error("Error al cargar los detalles de la venta");
         }
         const venta = await response.json();
-        mostrarDetallesVenta(venta, detallesDiv);
+        MostrarDetallesVenta(venta, detallesDiv);
         return true;
     } catch (error) {
         console.error("Error:", error);
-        Swal.fire({
-            title: 'Error',
-            text: 'No se pudo cargar el detalle de la venta. Intente nuevamente en unos minutos.',
-            icon: 'error',
-            customClass: {
-                popup: 'custom-alert'
-            }
-        });
+        MostrarMensaje("Error" ,"No se pudo cargar el detalle de la venta. Intente nuevamente en unos minutos.", "error");
         return false;
     }
 }
 
-// Función para mostrar los detalles de la venta dentro del div correspondiente
-function mostrarDetallesVenta(venta, detallesDiv) {
+// Cargar detalles de la venta dentro del div
+function MostrarDetallesVenta(venta, detallesDiv) {
     let productosHTML = '';
     venta.products.forEach(producto => {
         productosHTML += `
@@ -214,5 +190,5 @@ function mostrarDetallesVenta(venta, detallesDiv) {
     `;
 }
 
-// Evento para manejar la búsqueda cuando se hace clic en el botón
-botonBuscar.addEventListener("click", handleBuscarClick);
+// Evento para manejar la búsqueda cuando se hace click en el botón
+botonBuscar.addEventListener("click", ManejadorBuscarClick);
