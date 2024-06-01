@@ -1,12 +1,12 @@
 .carrito-vacio,
 .carrito-comprado {
-    color: var(---clr-main);
+    color: var(--clr-main);
 }
 
 .carrito-producto-descuento {
     font-size: 1rem;
     text-align: center;
-    color: var(---clr-main);
+    color: var(--clr-main);
 }
 
 .carrito-producto-detalle {
@@ -25,7 +25,7 @@
 .carrito-producto-eliminar {
     border: 0;
     background-color: transparent;
-    color: var(---clr-red);
+    color: var(--clr-red);
     cursor: pointer;
 }
 
@@ -36,17 +36,17 @@
 
 .carrito-acciones-vaciar {
     border: 0;
-    background-color: var(---clr-gray);
+    background-color: var(--clr-gray);
     padding: 1rem;
     border-radius: 1rem;
-    color: var(---clr-main);
+    color: var(--clr-main);
     text-transform: uppercase;
     cursor: pointer;
 }
 
 .carrito-acciones-vaciar:hover {
-    background-color: var(---clr-main);
-    color: var(---clr-white);
+    background-color: var(--clr-main);
+    color: var(--clr-white);
 }
 
 .carrito-acciones-derecha {
@@ -55,9 +55,9 @@
 
 .carrito-acciones-total {
     display: flex;
-    background-color: var(---clr-gray);
+    background-color: var(--clr-gray);
     padding: 1rem;
-    color: var(---clr-main);
+    color: var(--clr-main);
     text-transform: uppercase;
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
@@ -66,9 +66,9 @@
 
 .carrito-acciones-comprar {
     border: 0;
-    background-color: var(---clr-main);
+    background-color: var(--clr-main);
     padding: 1rem;
-    color: var(---clr-white);
+    color: var(--clr-white);
     text-transform: uppercase;
     cursor: pointer;
     border-top-right-radius: 1rem;
@@ -76,8 +76,8 @@
 }
 
 .carrito-acciones-comprar:hover {
-    background-color: var(---clr-main-btn);
-    color: var(---clr-white);
+    background-color: var(--clr-main-btn);
+    color: var(--clr-white);
 }
 
 .disabled {

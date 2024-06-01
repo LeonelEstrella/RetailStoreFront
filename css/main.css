@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    ---clr-main: #800080;
-    ---clr-main-ligth: #A35FA3;
-    ---clr-main-btn: #5a175a;
-    ---clr-gray: #e2e2e2;
-    ---clr-white: #ececec;
-    ---clr-red: #961818;
+    --clr-main: #800080;
+    --clr-main-ligth: #A35FA3;
+    --clr-main-btn: #5a175a;
+    --clr-gray: #e2e2e2;
+    --clr-white: #ececec;
+    --clr-red: #961818;
 }
 
 * {
@@ -32,13 +32,13 @@ a {
 .wrapper {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    background-color: var(---clr-main);
+    background-color: var(--clr-main);
 }
 
 aside {
     padding: 2rem;
     padding-right: 0;
-    color: var(---clr-white);
+    color: var(--clr-white);
     position: sticky;
     top: 0;
     height: 100vh;
@@ -50,7 +50,7 @@ aside {
 .boton-menu {
     background-color: transparent;
     border: 0;
-    color: var(---clr-white);
+    color: var(--clr-white);
     font-size: 1rem;
     cursor: pointer;
     display: flex;
@@ -63,8 +63,8 @@ aside {
 }
 
 .boton-menu.active {
-    background-color: var(---clr-white);
-    color: var(---clr-main);
+    background-color: var(--clr-white);
+    color: var(--clr-main);
     border-top-left-radius: 1rem;
     border-bottom-left-radius:  1rem;
     position: relative;
@@ -79,7 +79,7 @@ aside {
     right: 0;
     background-color: transparent;
     border-bottom-right-radius: .5rem;
-    box-shadow: 0 1rem 0 var(---clr-white);
+    box-shadow: 0 1rem 0 var(--clr-white);
 }
 
 .boton-menu.active::after {
@@ -91,7 +91,7 @@ aside {
     right: 0;
     background-color: transparent;
     border-top-right-radius: .5rem;
-    box-shadow: 0 -1rem 0 var(---clr-white);
+    box-shadow: 0 -1rem 0 var(--clr-white);
 }
 
 .boton-carrito {
@@ -99,8 +99,8 @@ aside {
 }
 
 .boton-carrito.active .cantidad-productos-comprados {
-    background-color: var(---clr-main);
-    color: var(---clr-white);
+    background-color: var(--clr-main);
+    color: var(--clr-white);
 }
 
 .logo {
@@ -115,12 +115,12 @@ aside {
 }
 
 .texto-footer {
-    color: var(---clr-main-ligth);
+    color: var(--clr-main-ligth);
     font-size: 0.85rem;
 }
 
 main {
-    background: var(---clr-white);
+    background: var(--clr-white);
     margin: 1rem;
     margin-left: 0;
     border-radius: 2rem;
@@ -129,7 +129,7 @@ main {
 
 .titulo-principal {
     margin-bottom: 2rem;
-    color: var(---clr-main);
+    color: var(--clr-main);
 }
 
 /* Spinner común */
@@ -217,8 +217,8 @@ main {
     gap: 1rem;
     align-items: center;
     margin-bottom: 0.5rem;
-    background-color: var(---clr-gray);
-    color: var(---clr-main);
+    background-color: var(--clr-gray);
+    color: var(--clr-main);
     padding: .5rem;
     padding-right: 1.5rem;
     border-radius: 1rem;
@@ -251,12 +251,12 @@ main {
 }
 
 input {
-    background-color: var(---clr-white);
+    background-color: var(--clr-white);
     width: 20vw;
     padding: 10px;
     border-radius: 1rem;
     outline: none;
-    border:  5px solid var(---clr-main);
+    border:  5px solid var(--clr-main);
     font-weight: 600;
 }
 

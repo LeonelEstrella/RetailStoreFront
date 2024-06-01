@@ -3,9 +3,9 @@
 }
 
 .boton-ver-detalle-venta:hover, .boton-cerrar-modal:hover {
-    background-color: var(---clr-main);
-    color: var(---clr-white);
-    border: 2px solid var(---clr-main);
+    background-color: var(--clr-main);
+    color: var(--clr-white);
+    border: 2px solid var(--clr-main);
 }
 
 .venta-producto {
@@ -18,13 +18,13 @@
     margin-bottom: rem;
     margin-top: 0.5rem;
     border: 0;
-    background-color: var(---clr-white);
-    color: var(---clr-main);
+    background-color: var(--clr-white);
+    color: var(--clr-main);
     padding: .5rem;
     text-transform: uppercase;
     border-radius: 2rem;
     cursor: pointer;
-    border: 2px solid var(---clr-white);
+    border: 2px solid var(--clr-white);
     transition: background-color 0.2s, color 0.2s;
 }
 
@@ -32,16 +32,16 @@
     border: 0;
     width: 8vw;
     margin-left: 1rem ;
-    background-color: var(---clr-main);
+    background-color: var(--clr-main);
     padding: 1rem;
-    color: var(---clr-white);
+    color: var(--clr-white);
     text-transform: uppercase;
     cursor: pointer;
 }
 
 #boton-buscar:hover {
-    background-color: var(---clr-main-btn);
-    color: var(---clr-white);
+    background-color: var(--clr-main-btn);
+    color: var(--clr-white);
 }
 
 .venta-producto-detalle {
