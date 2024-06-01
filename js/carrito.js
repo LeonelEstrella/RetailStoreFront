@@ -151,24 +151,10 @@ function ActualizarBotonesEliminar() {
     })
 }
 
-function EliminarDelCarrito(e) {
-    MostrarMensajeProductoEliminado();
-    const idBoton = e.currentTarget.id;
-    const index = productosEnCarrito.findIndex(producto => producto.id === idBoton);
-    productosEnCarrito.splice(index, 1);
-    CargarProductosCarrito();
-
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-}
-
-botonVaciar.addEventListener("click", VaciarCarrito);
-botonComprar.addEventListener("click", ComprarCarrito);
-
-function VaciarCarrito(e) {
-
+function ConfirmacionEliminacion(mensaje, confirmCallback) {
     Swal.fire({
         title: "¿Estás seguro?",
-        text: "¡Esta acción no puede ser revertida!",
+        text: mensaje,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -179,7 +165,29 @@ function VaciarCarrito(e) {
         customClass: {
             popup: 'custom-alert'
         }
-    }).then((result) => {
+    }).then(confirmCallback);
+}
+
+function EliminarDelCarrito(e) {
+    const idBoton = e.currentTarget.id;
+    ConfirmacionEliminacion("¡Esta acción no puede ser revertida!", (result) => {
+        if (result.isConfirmed) {
+            const index = productosEnCarrito.findIndex(producto => producto.id === idBoton);
+            if (index !== -1) {
+                productosEnCarrito.splice(index, 1);
+                localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+                CargarProductosCarrito();
+                MostrarMensajeProductoEliminado();
+            }
+        }
+    });
+}
+
+botonVaciar.addEventListener("click", VaciarCarrito);
+botonComprar.addEventListener("click", ComprarCarrito);
+
+function VaciarCarrito(e) {
+    ConfirmacionEliminacion("¡Esta acción no puede ser revertida!", (result) => {
         if (result.isConfirmed) {
             Swal.fire({
                 text: "Tu carrito ha sido vaciado.",
