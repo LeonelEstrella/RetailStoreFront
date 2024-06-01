@@ -10,7 +10,7 @@ const contenedorTotal = document.querySelector("#total");
 const botonComprar = document.querySelector("#carrito-acciones-comprar");
 const urlCompra = "https://localhost:7036/Sale";
 
-function MostrarMensajeProductoEliminado(){
+function MostrarMensajeProductoEliminado() {
     Toastify({
         text: "Producto eliminado",
         duration: 3000,
@@ -38,6 +38,9 @@ function CargarProductosCarrito() {
         contenedorCarritoProductos.classList.remove("disabled");
         contenedorCarritoAcciones.classList.remove("disabled");
         contenedorCarritoComprado.classList.add("disabled");
+
+        // Mostrar la clase carrito-resumen-compra
+        document.querySelector(".carrito-resumen-compra").style.display = "block";
 
         contenedorCarritoProductos.innerHTML = "";
 
@@ -90,10 +93,13 @@ function CargarProductosCarrito() {
         contenedorCarritoProductos.classList.add("disabled");
         contenedorCarritoAcciones.classList.add("disabled");
         contenedorCarritoComprado.classList.add("disabled");
+
+        // Ocultar la clase carrito-resumen-compra
+        document.querySelector(".carrito-resumen-compra").style.display = "none";
     }
 
     ActualizarBotonesEliminar();
-    ActualizarTotal();
+    ActualizarTotales();
 }
 
 function ActualizarCantidad(e) {
@@ -181,10 +187,40 @@ function VaciarCarrito(e) {
     });
 }
 
-function ActualizarTotal() {
-    let totalDescuento = productosEnCarrito.reduce((acc, producto) => acc + (((producto.price * (1 - (producto.discount / 100))) * producto.cantidad) * 1.21), 0);
-    total.innerHTML = `$${totalDescuento.toFixed(2)}`;
-    return totalDescuento.toFixed(2);
+function ActualizarTotales() {
+    let subtotal = 0;
+    let totalDescuento = 0;
+    let totalIVA = 0;
+
+    productosEnCarrito.forEach(producto => {
+        let precioOriginal = producto.price * producto.cantidad;
+        let descuento = (producto.price * (producto.discount / 100)) * producto.cantidad;
+        let precioConDescuento = precioOriginal - descuento;
+        let iva = precioConDescuento * 0.21;
+
+        subtotal += precioOriginal;
+        totalDescuento += descuento;
+        totalIVA += iva;
+    });
+
+    // Actualiza los elementos del DOM con los valores calculados
+    document.getElementById('subtotal').innerHTML = `Subtotal:  $${subtotal.toFixed(2)}`;
+    //const numeroDescuentoTotalElement = document.getElementById('numeroDescuentoTotal');
+    const descuentoTotalElement = document.getElementById('descuentoTotal');
+    const numeroDescuentoTotalElement = document.getElementById('numeroDescuentoTotal');
+    if (totalDescuento > 0) {
+        numeroDescuentoTotalElement.textContent = `-$${totalDescuento.toFixed(2)}`;
+        descuentoTotalElement.classList.remove('hidden');
+    } else {
+        numeroDescuentoTotalElement.textContent = '';
+        descuentoTotalElement.classList.add('hidden');
+    }
+    document.getElementById('iva').innerHTML = `Impuestos (IVA 21%):  $${totalIVA.toFixed(2)}`;
+
+    // Calcula el total con IVA incluido
+    let totalConIVA = subtotal - totalDescuento + totalIVA;
+    document.getElementById('total').innerHTML = `$${totalConIVA.toFixed(2)}`;
+    return totalConIVA.toFixed(2);
 }
 
 // Event listener para los cambios de cantidad
@@ -214,7 +250,7 @@ function ComprarCarrito() {
 
     let nuevaVenta = {
         products: listaProductos,
-        totalPayed: parseFloat(ActualizarTotal())
+        totalPayed: parseFloat(ActualizarTotales())
     }
 
     const opciones = {
@@ -252,6 +288,9 @@ function ComprarCarrito() {
             contenedorCarritoProductos.classList.add("disabled");
             contenedorCarritoAcciones.classList.add("disabled");
             contenedorCarritoComprado.classList.remove("disabled");
+
+            // Ocultar la clase carrito-resumen-compra
+            document.querySelector(".carrito-resumen-compra").style.display = "none";
         })
         .catch(error => {
             console.error('Error:', error);

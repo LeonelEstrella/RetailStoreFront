@@ -83,3 +83,21 @@
 .disabled {
     display: none;
 }
+
+#numeroDescuentoTotal {
+    color: var(--clr-red);
+}
+
+.carrito-resumen-compra {
+    background-color: var(--clr-gray);
+    padding: 1rem;
+    color: var(--clr-main);
+    text-transform: uppercase;
+    border-radius: 1rem;
+    gap: 1rem;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+    left: 1000px;
+}
