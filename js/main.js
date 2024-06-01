@@ -273,7 +273,7 @@ function MostrarDetallesProducto(productId) {
                 imageHeight: 320,
                 imageAlt: producto.name,
                 confirmButtonColor: "#3085d6",
-                confirmButtonText: "Ok",
+                confirmButtonText: "Continuar",
                 customClass: {
                     popup: 'custom-alert'
                 }
