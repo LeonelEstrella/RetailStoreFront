@@ -47,6 +47,13 @@ function MostrarMensajeProductoAgregado() {
 
 /***SECCIÓN CARGA DE PRODUCTOS***/
 
+function formatearNumero(numero) {
+    return new Intl.NumberFormat('es-ar', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(numero);
+}
+
 async function ObtenerProductos(endpoint) {
     try {
         let response = await fetch(endpoint);
@@ -92,11 +99,11 @@ function CargarProductos(productosElegidos) {
                     <div class="precio-y-descuento">
                         ${producto.discount && producto.discount !== 0 ? `
                         <span class="precio-con-descuento">
-                            <strike>$${producto.price}</strike>
-                            <span class="producto-precio-con-descuento">$${(producto.price * (1 - producto.discount / 100)).toFixed(2)}</span>
+                            <strike>$${formatearNumero(producto.price)}</strike>
+                            <span class="producto-precio-con-descuento">$${formatearNumero((producto.price * (1 - producto.discount / 100)).toFixed(2))}</span>
                         </span>
                         ` : `
-                        <p class="producto-precio">$${producto.price}</p>
+                        <p class="producto-precio">$${formatearNumero(producto.price)}</p>
                         `}
                         ${producto.discount && producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''}
                     </div>

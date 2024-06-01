@@ -32,6 +32,14 @@ function MostrarMensajeProductoEliminado() {
     }).showToast();
 }
 
+function formatearNumero(numero) {
+    return new Intl.NumberFormat('es-ar', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(numero);
+}
+
+
 function CargarProductosCarrito() {
     if (productosEnCarrito && productosEnCarrito.length > 0) {
         contenedorCarritoVacio.classList.add("disabled");
@@ -62,9 +70,9 @@ function CargarProductosCarrito() {
                         Cantidad: 
                         <input type="number" class="cantidad-producto" min="0" max="99" value="${producto.cantidad}" data-id="${producto.id}">
                     </div>
-                    <div class="segundo-numero">Precio por unidad: $${producto.price}</div>
+                    <div class="segundo-numero">Precio por unidad: $${formatearNumero(producto.price)}</div>
                     ${descuentoHTML}
-                    <div class="tercer-numero">Subtotal: $${(producto.price * producto.cantidad).toFixed(2)}</div>
+                    <div class="tercer-numero">Subtotal: $${formatearNumero((producto.price * producto.cantidad).toFixed(2))}</div>
                 </div>
                 <button class="carrito-producto-eliminar" id="${producto.id}"><i class="bi bi-trash-fill"></i></button>
             `;
@@ -204,22 +212,22 @@ function ActualizarTotales() {
     });
 
     // Actualiza los elementos del DOM con los valores calculados
-    document.getElementById('subtotal').innerHTML = `Subtotal:  $${subtotal.toFixed(2)}`;
+    document.getElementById('subtotal').innerHTML = `Subtotal:  $${formatearNumero(subtotal.toFixed(2))}`;
     //const numeroDescuentoTotalElement = document.getElementById('numeroDescuentoTotal');
     const descuentoTotalElement = document.getElementById('descuentoTotal');
     const numeroDescuentoTotalElement = document.getElementById('numeroDescuentoTotal');
     if (totalDescuento > 0) {
-        numeroDescuentoTotalElement.textContent = `-$${totalDescuento.toFixed(2)}`;
+        numeroDescuentoTotalElement.textContent = `-$${formatearNumero(totalDescuento.toFixed(2))}`;
         descuentoTotalElement.classList.remove('hidden');
     } else {
         numeroDescuentoTotalElement.textContent = '';
         descuentoTotalElement.classList.add('hidden');
     }
-    document.getElementById('iva').innerHTML = `Impuestos (IVA 21%):  $${totalIVA.toFixed(2)}`;
+    document.getElementById('iva').innerHTML = `Impuestos (IVA 21%):  $${formatearNumero(totalIVA.toFixed(2))}`;
 
     // Calcula el total con IVA incluido
     let totalConIVA = subtotal - totalDescuento + totalIVA;
-    document.getElementById('total').innerHTML = `<b>Total:</b> $${totalConIVA.toFixed(2)}`;
+    document.getElementById('total').innerHTML = `<b>Total:</b> $${formatearNumero(totalConIVA.toFixed(2))}`;
     return totalConIVA.toFixed(2);
 }
 

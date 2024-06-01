@@ -28,6 +28,14 @@ function MostrarMensaje(titulo, mensaje, icono) {
     });
 }
 
+function formatearNumero(numero) {
+    return new Intl.NumberFormat('es-ar', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(numero);
+}
+
+
 // Cargar las ventas
 async function CargarVentasDesdeFechas(fechaInicio, fechaFin) {
     MostrarSpinner();
@@ -103,12 +111,12 @@ function MostrarVentas(ventas) {
             <i class="bi bi-receipt"></i>
             <div class="venta-producto-detalle">
                 <div class="nombre">Venta N°${venta.id}</div>
-                <div class="primer-numero">Total: $${venta.totalPay.toFixed(2)}</div>
+                <div class="primer-numero">Total: $${formatearNumero(venta.totalPay.toFixed(2))}</div>
                 <div class="segundo-numero">Cantidad de Productos: ${venta.totalQuantity}</div>
                 <div class="tercer-numero">Fecha: ${fechaFormateada}</div>
                 <button class="boton-ver-detalle-venta" id="${btnAbrirModalId}">Ver detalles</button>
                 <dialog id="${modalId}">
-                    <h2 class="titulo-principal">Detalles venta: ${venta.id}</h2>
+                    <h2 class="titulo-principal">Detalles de la venta</h2>
                     <div class="venta-detalles"></div> <!-- Contenedor para los detalles de la venta -->
                     <button class="boton-cerrar-modal" id="${btnCerrarModalId}">Cerrar ventana</button>
                 </dialog>
@@ -161,7 +169,7 @@ async function CargarDetallesVenta(saleId, detallesDiv) {
         return true;
     } catch (error) {
         console.error("Error:", error);
-        MostrarMensaje("Error" ,"No se pudo cargar el detalle de la venta. Intente nuevamente en unos minutos.", "error");
+        MostrarMensaje("Error", "No se pudo cargar el detalle de la venta. Intente nuevamente en unos minutos.", "error");
         return false;
     }
 }
@@ -173,15 +181,16 @@ function MostrarDetallesVenta(venta, detallesDiv) {
         productosHTML += `
             <div><b>Id Producto:</b> ${producto.productId}</div>
             <div><b>Cantidad:</b> ${producto.quantity}</div>
-            <div><b>Precio:</b> $${producto.price.toFixed(2)}</div>
+            <div><b>Precio:</b> $${formatearNumero(producto.price.toFixed(2))}</div>
             ${producto.discount !== null ? `<div><b>Descuento:</b> ${producto.discount}%</div>` : ''}
             <br>
         `;
     });
 
     detallesDiv.innerHTML = `
-        <div><b>Total:</b> $${venta.totalPay.toFixed(2)}</div>
-        <div><b>Subtotal:</b> $${venta.subtotal.toFixed(2)}</div>
+        <div><b>Venta ID:</b> ${venta.id}</div>
+        <div><b>Total:</b> $${formatearNumero(venta.totalPay.toFixed(2))}</div>
+        <div><b>Subtotal:</b> $${formatearNumero(venta.subtotal.toFixed(2))}</div>
         <div><b>Impuesto por producto:</b> 21%</div>
         <br>
         <div><b>Productos:</b></div>
