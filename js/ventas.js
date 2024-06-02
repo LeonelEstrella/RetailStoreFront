@@ -45,7 +45,6 @@ function MostrarMensajeError(mensaje) {
 
 document.getElementById('buscador').addEventListener('input', async () => {
     const saleId = document.getElementById('buscador').value;
-    const mensajeError = document.getElementById('mensajeError');
 
     if (saleId) {
         mensajeError.style.display = 'none';  // Ocultar mensaje de error durante la búsqueda
@@ -57,6 +56,7 @@ document.getElementById('buscador').addEventListener('input', async () => {
 });
 
 async function BuscarVentaPorId(saleId) {
+    contenedorVentas.innerHTML = ""; // Limpiar el contenido previo antes de buscar una nueva venta
     MostrarSpinner();
     try {
         const url = `${urlVentaPorId}/${saleId}`;
@@ -65,8 +65,7 @@ async function BuscarVentaPorId(saleId) {
         if (!response.ok) {
             if (response.status === 404) {
                 throw new Error(`HTTP error! status: ${response.status}`);
-            }
-             else {
+            } else {
                 throw new Error("No se pudo cargar la información de la venta. Intente nuevamente en unos minutos.");
             }
         }
@@ -81,8 +80,7 @@ async function BuscarVentaPorId(saleId) {
         console.error("Error:", error);
         if (error.message.includes('status: 404')) {
             MostrarMensajeError("No existe ninguna venta con el ID ingresado.");
-        }
-         else {
+        } else {
             MostrarMensaje("Error", "No se pudo cargar la información de la venta. Intente nuevamente en unos minutos.", "error");
         }
     } finally {
@@ -94,7 +92,6 @@ async function BuscarVentaPorId(saleId) {
 async function CargarVentasDesdeFechas(fechaInicio, fechaFin) {
     MostrarSpinner();
     try {
-        // Construir la URL dependiendo de los datos proporcionados
         let urlConFechas = urlEndpoint;
         const params = [];
 
@@ -146,7 +143,6 @@ function ManejadorBuscarClick() {
 
 // Mostrar las ventas
 function MostrarVentas(ventas) {
-
     contenedorVentas.innerHTML = ""; // Limpiar el contenido previo
     mensajeError.style.display = 'none';  // Ocultar mensaje de error si se encuentra una venta
 
