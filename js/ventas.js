@@ -4,6 +4,8 @@ const inputFechaInicio = document.getElementById("fecha-inicio");
 const inputFechaFin = document.getElementById("fecha-fin");
 const botonBuscar = document.getElementById("boton-buscar");
 const spinner = document.getElementById('spinner-no-background');
+const mensajeError = document.getElementById('mensajeError');
+const urlVentaPorId = `https://localhost:7036/Sale`;
 
 // Función para mostrar el spinner
 function MostrarSpinner() {
@@ -35,6 +37,58 @@ function formatearNumero(numero) {
     }).format(numero);
 }
 
+function MostrarMensajeError(mensaje) {
+    const mensajeError = document.getElementById('mensajeError');
+    mensajeError.textContent = mensaje;
+    mensajeError.style.display = 'block';
+}
+
+document.getElementById('buscador').addEventListener('input', async () => {
+    const saleId = document.getElementById('buscador').value;
+    const mensajeError = document.getElementById('mensajeError');
+
+    if (saleId) {
+        mensajeError.style.display = 'none';  // Ocultar mensaje de error durante la búsqueda
+        await BuscarVentaPorId(saleId);
+    } else {
+        contenedorVentas.innerHTML = ""; // Limpiar el contenido si no hay ID
+        mensajeError.style.display = 'none';  // Ocultar mensaje de error si no hay ID
+    }
+});
+
+async function BuscarVentaPorId(saleId) {
+    MostrarSpinner();
+    try {
+        const url = `${urlVentaPorId}/${saleId}`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+             else {
+                throw new Error("No se pudo cargar la información de la venta. Intente nuevamente en unos minutos.");
+            }
+        }
+
+        const venta = await response.json();
+        if (!venta || Object.keys(venta).length === 0) {
+            MostrarMensajeError("No existe ninguna venta con ese ID");
+        } else {
+            MostrarVentas([venta]);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        if (error.message.includes('status: 404')) {
+            MostrarMensajeError("No existe ninguna venta con el ID ingresado.");
+        }
+         else {
+            MostrarMensaje("Error", "No se pudo cargar la información de la venta. Intente nuevamente en unos minutos.", "error");
+        }
+    } finally {
+        OcultarSpinner();
+    }
+}
 
 // Cargar las ventas
 async function CargarVentasDesdeFechas(fechaInicio, fechaFin) {
@@ -92,42 +146,18 @@ function ManejadorBuscarClick() {
 
 // Mostrar las ventas
 function MostrarVentas(ventas) {
+
     contenedorVentas.innerHTML = ""; // Limpiar el contenido previo
+    mensajeError.style.display = 'none';  // Ocultar mensaje de error si se encuentra una venta
 
     ventas.forEach(venta => {
-        const fechaVenta = new Date(venta.date);
-        const fechaFormateada = `${fechaVenta.getDate()}/${fechaVenta.getMonth() + 1}/${fechaVenta.getFullYear()}`;
-
-        const div = document.createElement("div");
-        div.classList.add("venta-producto");
-        div.dataset.id = venta.id;
-
-        // Generar IDs para los botones y modales
-        const modalId = `modal-${venta.id}`;
-        const btnAbrirModalId = `boton-abrir-modal-${venta.id}`;
-        const btnCerrarModalId = `boton-cerrar-modal-${venta.id}`;
-
-        div.innerHTML = `
-            <i class="bi bi-receipt"></i>
-            <div class="venta-producto-detalle">
-                <div class="nombre">Venta N°${venta.id}</div>
-                <div class="primer-numero">Total: $${formatearNumero(venta.totalPay.toFixed(2))}</div>
-                <div class="segundo-numero">Cantidad de Productos: ${venta.totalQuantity}</div>
-                <div class="tercer-numero">Fecha: ${fechaFormateada}</div>
-                <button class="boton-ver-detalle-venta" id="${btnAbrirModalId}">Ver detalles</button>
-                <dialog id="${modalId}">
-                    <h2 class="titulo-principal">Detalles de la venta</h2>
-                    <div class="venta-detalles"></div> <!-- Contenedor para los detalles de la venta -->
-                    <button class="boton-cerrar-modal" id="${btnCerrarModalId}">Cerrar ventana</button>
-                </dialog>
-            </div>
-        `;
+        const div = CrearVentaDiv(venta);
         contenedorVentas.append(div);
 
         // Seleccionar el modal y los botones específicos de esta venta
-        const btnAbrirModal = document.getElementById(btnAbrirModalId);
-        const btnCerrarModal = document.getElementById(btnCerrarModalId);
-        const modal = document.getElementById(modalId);
+        const btnAbrirModal = div.querySelector(`#boton-abrir-modal-${venta.id}`);
+        const btnCerrarModal = div.querySelector(`#boton-cerrar-modal-${venta.id}`);
+        const modal = div.querySelector(`#modal-${venta.id}`);
         const detallesDiv = modal.querySelector(".venta-detalles");
         const overlay = document.getElementById('overlay');
 
@@ -155,6 +185,38 @@ function MostrarVentas(ventas) {
             }
         });
     });
+}
+
+function CrearVentaDiv(venta) {
+    const fechaVenta = new Date(venta.date);
+    const fechaFormateada = `${fechaVenta.getDate()}/${fechaVenta.getMonth() + 1}/${fechaVenta.getFullYear()}`;
+
+    const div = document.createElement("div");
+    div.classList.add("venta-producto");
+    div.dataset.id = venta.id;
+
+    // Generar IDs para los botones y modales
+    const modalId = `modal-${venta.id}`;
+    const btnAbrirModalId = `boton-abrir-modal-${venta.id}`;
+    const btnCerrarModalId = `boton-cerrar-modal-${venta.id}`;
+
+    div.innerHTML = `
+        <i class="bi bi-receipt"></i>
+        <div class="venta-producto-detalle">
+            <div class="nombre">Venta N°${venta.id}</div>
+            <div class="primer-numero">Total: $${formatearNumero(venta.totalPay.toFixed(2))}</div>
+            <div class="segundo-numero">Cantidad de Productos: ${venta.totalQuantity}</div>
+            <div class="tercer-numero">Fecha: ${fechaFormateada}</div>
+            <button class="boton-ver-detalle-venta" id="${btnAbrirModalId}">Ver detalles</button>
+            <dialog id="${modalId}">
+                <h2 class="titulo-principal">Detalles de la venta</h2>
+                <div class="venta-detalles"></div> <!-- Contenedor para los detalles de la venta -->
+                <button class="boton-cerrar-modal" id="${btnCerrarModalId}">Cerrar ventana</button>
+            </dialog>
+        </div>
+    `;
+
+    return div;
 }
 
 // Mostrar detalles de una venta específica

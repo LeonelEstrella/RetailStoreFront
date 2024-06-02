@@ -41,13 +41,15 @@
         <main>
             <h2 class="titulo-principal">Historial de ventas</h2>
             <div class="contedor-informacion">
-                <div>
+                <div class="encabezado">
                     <label for="fecha-busqueda">Buscar desde:</label>
                     <input type="date" id="fecha-inicio" />
                     <label for="fecha-busqueda">Buscar hasta:</label>
                     <input type="date" id="fecha-fin" />
                     <button id="boton-buscar">Buscar</button>
+                    <input type="number" name="buscador" id="buscador" placeholder="Ingrese el ID de la venta...">
                 </div>
+                <p id="mensajeError" style="display: none;"></p>
                 <div id="ventas-lista" class="listado-informacion">
                     <!-- Aquí se insertarán las ventas -->
                 </div>
