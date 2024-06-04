@@ -5,7 +5,6 @@ const inputFechaFin = document.getElementById("fecha-fin");
 const botonBuscar = document.getElementById("boton-buscar");
 const spinner = document.getElementById('spinner-no-background');
 const mensajeError = document.getElementById('mensajeError');
-const urlVentaPorId = `https://localhost:7036/Sale`;
 
 // Función para mostrar el spinner
 function MostrarSpinner() {
@@ -59,7 +58,7 @@ async function BuscarVentaPorId(saleId) {
     contenedorVentas.innerHTML = ""; // Limpiar el contenido previo antes de buscar una nueva venta
     MostrarSpinner();
     try {
-        const url = `${urlVentaPorId}/${saleId}`;
+        const url = `${urlEndpoint}/${saleId}`;
         const response = await fetch(url);
 
         if (!response.ok) {
