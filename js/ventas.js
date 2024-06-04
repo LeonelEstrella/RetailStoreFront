@@ -199,7 +199,7 @@ function CrearVentaDiv(venta) {
     div.innerHTML = `
         <i class="bi bi-receipt"></i>
         <div class="venta-producto-detalle">
-            <div class="nombre">Venta N°${venta.id}</div>
+            <div class="nombre">ID de venta: ${venta.id}</div>
             <div class="primer-numero">Total: $${formatearNumero(venta.totalPay.toFixed(2))}</div>
             <div class="segundo-numero">Cantidad de Productos: ${venta.totalQuantity}</div>
             <div class="tercer-numero">Fecha: ${fechaFormateada}</div>
