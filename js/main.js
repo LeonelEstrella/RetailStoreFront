@@ -82,65 +82,69 @@ ObtenerProductos(urlProductos)
     });
 
 
-function CargarProductos(productosElegidos) {
-    contenedorProductos.innerHTML = "";
-    productosElegidos.forEach(producto => {
-        const div = document.createElement("div");
-        div.classList.add("producto");
-        div.innerHTML = `
-                <img class="producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
-                <div class="producto-detalles">
-                    <h3 class="producto-titulo">${producto.name}</h3>
-                    <div class="ver-detalles-contenedor">
-                        <a href="#" class="producto-detalles-link" data-id="${producto.id}">
-                            <span>Ver detalles</span>
-                        </a>
+    function CargarProductos(productosElegidos) {
+        contenedorProductos.innerHTML = "";
+        productosElegidos.forEach(producto => {
+            const div = document.createElement("div");
+            div.classList.add("producto");
+            div.innerHTML = `
+                    <img class="producto-imagen" src="${producto.imageUrl}" alt="${producto.name}">
+                    <div class="producto-detalles">
+                        <h3 class="producto-titulo">${producto.name}</h3>
+                        <div class="ver-detalles-contenedor">
+                            <a href="#" class="producto-detalles-link" data-id="${producto.id}">
+                                <span>Ver detalles</span>
+                            </a>
+                        </div>
+                        <div class="precio-y-descuento">
+                            ${producto.discount && producto.discount !== 0 ? `
+                            <span class="precio-con-descuento">
+                                <strike>$${formatearNumero(producto.price)}</strike>
+                                <span class="producto-precio-con-descuento">$${formatearNumero((producto.price * (1 - producto.discount / 100)).toFixed(2))}</span>
+                            </span>
+                            ` : `
+                            <p class="producto-precio">$${formatearNumero(producto.price)}</p>
+                            `}
+                            ${producto.discount && producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''}
+                        </div>
+                        <div class="producto-detalles-botones">
+                            <input type="number" min="1" max="99" value="1" class="cantidad-producto" id="cantidad-${producto.id}">
+                            <button class="producto-agregar" data-id="${producto.id}">Agregar</button>
+                        </div>
                     </div>
-                    <div class="precio-y-descuento">
-                        ${producto.discount && producto.discount !== 0 ? `
-                        <span class="precio-con-descuento">
-                            <strike>$${formatearNumero(producto.price)}</strike>
-                            <span class="producto-precio-con-descuento">$${formatearNumero((producto.price * (1 - producto.discount / 100)).toFixed(2))}</span>
-                        </span>
-                        ` : `
-                        <p class="producto-precio">$${formatearNumero(producto.price)}</p>
-                        `}
-                        ${producto.discount && producto.discount !== 0 ? `<p class="producto-descuento">- ${producto.discount}%</p>` : ''}
-                    </div>
-                    <div class="producto-detalles-botones">
-                        <input type="number" min="1" max="99" value="1" class="cantidad-producto" id="cantidad-${producto.id}">
-                        <button class="producto-agregar" data-id="${producto.id}">Agregar</button>
-                    </div>
-                </div>
-            `;
-        contenedorProductos.append(div);
-    });
-    // Añadir event listener a los enlaces de "Ver detalles"
-    document.querySelectorAll('.producto-detalles-link').forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-            const productId = this.dataset.id;
-            MostrarDetallesProducto(productId);
+                `;
+            contenedorProductos.append(div);
         });
-    });
-
-    // Añadir event listeners a los inputs de cantidad
-    document.querySelectorAll('.cantidad-producto').forEach(input => {
-        input.addEventListener('input', (event) => {
-            if (event.target.value > 99) {
-                event.target.value = 99;
-            }
+        // Añadir event listener a los enlaces de "Ver detalles"
+        document.querySelectorAll('.producto-detalles-link').forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const productId = this.dataset.id;
+                MostrarDetallesProducto(productId);
+            });
         });
-
-        input.addEventListener('blur', (event) => {
-            if (event.target.value > 99) {
-                event.target.value = 99;
-            }
+    
+        // Añadir event listeners a los inputs de cantidad
+        document.querySelectorAll('.cantidad-producto').forEach(input => {
+            input.addEventListener('input', (event) => {
+                if (event.target.value > 99) {
+                    event.target.value = 99;
+                } else if (event.target.value < 1) {
+                    event.target.value = 1;
+                }
+            });
+    
+            input.addEventListener('blur', (event) => {
+                if (event.target.value > 99) {
+                    event.target.value = 99;
+                } else if (event.target.value < 1) {
+                    event.target.value = 1;
+                }
+            });
         });
-    });
-
-    ActualizarBotonesAgregar();
-}
+    
+        ActualizarBotonesAgregar();
+    }
 
 function ActualizarBotonesAgregar() {
     const botonesAgregar = document.querySelectorAll(".producto-agregar");
