@@ -83,7 +83,9 @@ function CargarProductosCarrito() {
         const inputsCantidad = document.querySelectorAll('.cantidad-producto');
         inputsCantidad.forEach(input => {
             input.addEventListener('input', (event) => {
-                if (event.target.value > 99) {
+                if (event.target.value === '' || event.target.value < 0) {
+                    event.target.value = 1;
+                } else if (event.target.value > 99) {
                     event.target.value = 99;
                 }
             });
@@ -91,6 +93,8 @@ function CargarProductosCarrito() {
             input.addEventListener('blur', (event) => {
                 if (event.target.value > 99) {
                     event.target.value = 99;
+                } else if (event.target.value < 0) {
+                    event.target.value = 0;
                 }
             });
 
@@ -109,6 +113,7 @@ function CargarProductosCarrito() {
     ActualizarBotonesEliminar();
     ActualizarTotales();
 }
+
 
 function ActualizarCantidad(e) {
     const idProducto = e.currentTarget.getAttribute('data-id');
