@@ -9,6 +9,7 @@ const cantidadProductosComprados = document.querySelector(".cantidad-productos-c
 const buscador = document.querySelector("#buscador");
 let productosFiltrados = []; // Lista para almacenar los productos filtrados
 const overlay = document.getElementById('overlay');
+const mensajeError = document.querySelector("#mensajeError");
 
 /***SECCIÓN MENSAJES***/
 
@@ -43,6 +44,12 @@ function MostrarMensajeProductoAgregado() {
         },
         onClick: function () { }
     }).showToast();
+}
+
+function MostrarMensajeError(mensaje) {
+    const mensajeError = document.getElementById('mensajeError');
+    mensajeError.textContent = mensaje;
+    mensajeError.style.display = 'block';
 }
 
 /***SECCIÓN CARGA DE PRODUCTOS***/
@@ -168,6 +175,12 @@ document.addEventListener("keyup", async e => {
         productosFiltrados = [];
 
         if (valorBusqueda.length > 0) {
+            // Ocultar el mensaje de error
+            mensajeError.style.display = "none";
+            
+            // Mostrar el spinner
+            spinner.classList.remove('hidden');
+            
             let endpoint = `${urlProductos}?name=${encodeURIComponent(valorBusqueda)}`;
 
             try {
@@ -181,15 +194,30 @@ document.addEventListener("keyup", async e => {
                         );
                     }
 
-                    CargarProductos(productosFiltrados);
+                    if (productosFiltrados.length === 0) {
+                        contenedorProductos.innerHTML = "";
+                        // Mostrar mensaje de error si no se encontraron productos
+                        MostrarMensajeError("No existe ningún producto con ese nombre.");
+                    } else {
+                        // Cargar los productos encontrados
+                        CargarProductos(productosFiltrados);
+                    }
                 } else {
                     console.error("Error en la solicitud: " + response.statusText);
+                    // Mostrar mensaje de error si la solicitud falla
+                    MostrarError("No se pudo realizar la búsqueda de los productos. Intente en unos minutos.");
                 }
             } catch (error) {
                 console.error("Error de red: " + error.message);
+                // Mostrar mensaje de error si hay un error de red
                 MostrarError("No se pudo realizar la búsqueda de los productos. Intente en unos minutos.");
+            } finally {
+                // Ocultar el spinner
+                spinner.classList.add('hidden');
             }
         } else {
+            // Si la búsqueda es vacia oculto el mensaje de error
+            mensajeError.style.display = "none";
             if (tituloPrincipal.innerText === "Todos los productos") {
                 productosFiltrados = productos;
             } else {
@@ -197,7 +225,6 @@ document.addEventListener("keyup", async e => {
                     producto.categoryName === tituloPrincipal.innerText
                 );
             }
-
             CargarProductos(productosFiltrados);
         }
     }
