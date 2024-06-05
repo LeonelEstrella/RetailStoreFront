@@ -42,6 +42,33 @@ function MostrarMensajeError(mensaje) {
     mensajeError.style.display = 'block';
 }
 
+let tiempoDesdeUltimoErrorMostrado = 0; // Almacena el tiempo desde la última vez que se mostró el mensaje de error
+
+function MostrarErrorValidandoTiempo(mensaje) {
+    const tiempoActualEnMilisegundos = new Date().getTime(); // Obtener el tiempo actual en milisegundos
+
+    // Calcular el tiempo transcurrido desde la última vez que se mostró el mensaje de error
+    const lapsoDeTiempo = tiempoActualEnMilisegundos - tiempoDesdeUltimoErrorMostrado;
+
+    // Si pasó menos de 8 segundos no mostramos nada
+    if (lapsoDeTiempo < 8000) {
+        return;
+    }
+
+    // Mostrar el mensaje de error
+    Swal.fire({
+        title: 'Error',
+        text: mensaje,
+        icon: 'error',
+        customClass: {
+            popup: 'custom-alert'
+        }
+    });
+
+    // Actualizar el tiempo de la última vez que se mostró el mensaje de error
+    tiempoDesdeUltimoErrorMostrado = tiempoActualEnMilisegundos;
+}
+
 document.getElementById('buscador').addEventListener('input', async () => {
     const saleId = document.getElementById('buscador').value;
 
@@ -80,7 +107,7 @@ async function BuscarVentaPorId(saleId) {
         if (error.message.includes('status: 404')) {
             MostrarMensajeError("No existe ninguna venta con el ID ingresado.");
         } else {
-            MostrarMensaje("Error", "No se pudo cargar la información de la venta. Intente nuevamente en unos minutos.", "error");
+            MostrarErrorValidandoTiempo("No se pudo cargar la información de la venta. Intente nuevamente en unos minutos.");
         }
     } finally {
         OcultarSpinner();
@@ -123,7 +150,7 @@ async function CargarVentasDesdeFechas(fechaInicio, fechaFin) {
     } catch (error) {
         console.error("Error:", error);
         if (error.message.includes('status: 400')) {
-            MostrarMensaje("Error", "Los datos propiciados no son correctos. La fecha de inicio no puede ser mayor a la fecha de fin.", "error");
+            MostrarMensaje("Error", "Los datos proporcionados no son correctos. La fecha de inicio no puede ser mayor a la fecha de fin.", "error");
         } else {
             MostrarMensaje("Error", "No se pudo cargar la información de las ventas. Intente nuevamente en unos minutos.", "error");
         }

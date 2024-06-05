@@ -24,6 +24,33 @@ function MostrarError(mensaje) {
     });
 }
 
+let tiempoDesdeUltimoErrorMostrado = 0; // Almacena el tiempo desde la última vez que se mostró el mensaje de error
+
+function MostrarErrorValidandoTiempo(mensaje) {
+    const tiempoActualEnMilisegundos = new Date().getTime(); // Obtener el tiempo actual en milisegundos
+
+    // Calcular el tiempo transcurrido desde la última vez que se mostró el mensaje de error
+    const lapsoDeTiempo = tiempoActualEnMilisegundos - tiempoDesdeUltimoErrorMostrado;
+
+    // Si pasó menos de 8 segundos no mostramos nada
+    if (lapsoDeTiempo < 8000) {
+        return;
+    }
+
+    // Mostrar el mensaje de error
+    Swal.fire({
+        title: 'Error',
+        text: mensaje,
+        icon: 'error',
+        customClass: {
+            popup: 'custom-alert'
+        }
+    });
+
+    // Actualizar el tiempo de la última vez que se mostró el mensaje de error
+    tiempoDesdeUltimoErrorMostrado = tiempoActualEnMilisegundos;
+}
+
 function MostrarMensajeProductoAgregado() {
     Toastify({
         text: "Producto agregado",
@@ -205,18 +232,18 @@ document.addEventListener("keyup", async e => {
                 } else {
                     console.error("Error en la solicitud: " + response.statusText);
                     // Mostrar mensaje de error si la solicitud falla
-                    MostrarError("No se pudo realizar la búsqueda de los productos. Intente en unos minutos.");
+                    MostrarErrorValidandoTiempo("No se pudo realizar la búsqueda de los productos. Intente en unos minutos.");
                 }
             } catch (error) {
                 console.error("Error de red: " + error.message);
                 // Mostrar mensaje de error si hay un error de red
-                MostrarError("No se pudo realizar la búsqueda de los productos. Intente en unos minutos.");
+                MostrarErrorValidandoTiempo("No se pudo realizar la búsqueda de los productos. Intente en unos minutos.");
             } finally {
                 // Ocultar el spinner
                 spinner.classList.add('hidden');
             }
         } else {
-            // Si la búsqueda es vacia oculto el mensaje de error
+            // Si la búsqueda es vacía, ocultar el mensaje de error
             mensajeError.style.display = "none";
             if (tituloPrincipal.innerText === "Todos los productos") {
                 productosFiltrados = productos;
