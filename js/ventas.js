@@ -29,7 +29,7 @@ function MostrarMensaje(titulo, mensaje, icono) {
     });
 }
 
-function formatearNumero(numero) {
+function FormatearNumero(numero) {
     return new Intl.NumberFormat('es-ar', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
@@ -226,7 +226,7 @@ function CrearVentaDiv(venta) {
         <i class="bi bi-receipt"></i>
         <div class="venta-producto-detalle">
             <div class="nombre">ID de venta: ${venta.id}</div>
-            <div class="primer-numero">Total: $${formatearNumero(venta.totalPay.toFixed(2))}</div>
+            <div class="primer-numero">Total: $${FormatearNumero(venta.totalPay.toFixed(2))}</div>
             <div class="segundo-numero">Cantidad de Productos: ${venta.totalQuantity}</div>
             <div class="tercer-numero">Fecha: ${fechaFormateada}</div>
             <button class="boton-ver-detalle-venta" id="${btnAbrirModalId}">Ver detalles</button>
@@ -265,7 +265,7 @@ function MostrarDetallesVenta(venta, detallesDiv) {
         productosHTML += `
             <div><b>Id Producto:</b> ${producto.productId}</div>
             <div><b>Cantidad:</b> ${producto.quantity}</div>
-            <div><b>Precio por unidad:</b> $${formatearNumero(producto.price.toFixed(2))}</div>
+            <div><b>Precio por unidad:</b> $${FormatearNumero(producto.price.toFixed(2))}</div>
             ${producto.discount !== null ? `<div><b>Descuento:</b> ${producto.discount}%</div>` : ''}
             <br>
         `;
@@ -273,8 +273,8 @@ function MostrarDetallesVenta(venta, detallesDiv) {
 
     detallesDiv.innerHTML = `
         <div><b>Venta ID:</b> ${venta.id}</div>
-        <div><b>Total:</b> $${formatearNumero(venta.totalPay.toFixed(2))}</div>
-        <div><b>Subtotal:</b> $${formatearNumero(venta.subtotal.toFixed(2))}</div>
+        <div><b>Total:</b> $${FormatearNumero(venta.totalPay.toFixed(2))}</div>
+        <div><b>Subtotal:</b> $${FormatearNumero(venta.subtotal.toFixed(2))}</div>
         <div><b>Impuesto por producto:</b> 21%</div>
         <br>
         <div><b>Productos:</b></div>
