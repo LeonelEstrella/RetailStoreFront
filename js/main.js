@@ -79,14 +79,16 @@ function MostrarMensajeError(mensaje) {
     mensajeError.style.display = 'block';
 }
 
-/***SECCIÓN CARGA DE PRODUCTOS***/
 
+// Formatear número a formato argentino
 function formatearNumero(numero) {
     return new Intl.NumberFormat('es-ar', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
     }).format(numero);
 }
+
+/***SECCIÓN CARGA DE PRODUCTOS***/
 
 async function ObtenerProductos(endpoint) {
     try {
@@ -266,7 +268,7 @@ document.addEventListener("keyup", async e => {
     }
 });
 
-// Vaciar el buscador al cambiar de página
+// Vaciar el buscador al cambiar de categoria o página
 botonesCategorias.forEach(boton => {
     boton.addEventListener("click", () => {
         buscador.value = "";
@@ -289,7 +291,7 @@ const categoriaMap = {
     "Jardinería y Bricolaje": 10
 };
 
-// Manejador de clic en los botones de categorías
+// Manejador de click en los botones de categorías
 botonesCategorias.forEach(boton => {
     boton.addEventListener("click", async (e) => {
         const categoriaId = categoriaMap[boton.id];

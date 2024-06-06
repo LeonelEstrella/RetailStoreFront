@@ -15,7 +15,6 @@
 }
 
 .boton-ver-detalle-venta, .boton-cerrar-modal, #boton-buscar {
-    margin-bottom: rem;
     margin-top: 0.5rem;
     border: 0;
     background-color: var(--clr-white);

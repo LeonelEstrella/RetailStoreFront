@@ -56,7 +56,7 @@ function CargarProductosCarrito() {
             const div = document.createElement("div");
             div.classList.add("carrito-producto");
 
-            // Verifica si el producto tiene descuento
+            // Verifica si el producto tiene descuento para mostrarlo o no
             let descuentoHTML = `<div class="carrito-producto-descuento" style="visibility: hidden;">Sin Descuento</div>`;
             if (producto.discount && producto.discount > 0) {
                 descuentoHTML = `<div class="carrito-producto-descuento">Descuento: ${producto.discount}%</div>`;
@@ -188,6 +188,7 @@ function EliminarDelCarrito(e) {
     });
 }
 
+// Espera el click para disparar los eventos
 botonVaciar.addEventListener("click", VaciarCarrito);
 botonComprar.addEventListener("click", ComprarCarrito);
 

@@ -265,7 +265,7 @@ function MostrarDetallesVenta(venta, detallesDiv) {
         productosHTML += `
             <div><b>Id Producto:</b> ${producto.productId}</div>
             <div><b>Cantidad:</b> ${producto.quantity}</div>
-            <div><b>Precio:</b> $${formatearNumero(producto.price.toFixed(2))}</div>
+            <div><b>Precio por unidad:</b> $${formatearNumero(producto.price.toFixed(2))}</div>
             ${producto.discount !== null ? `<div><b>Descuento:</b> ${producto.discount}%</div>` : ''}
             <br>
         `;
