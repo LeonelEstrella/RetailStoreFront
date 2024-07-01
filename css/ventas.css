@@ -1,0 +1,89 @@
+.boton-ver-detalle-venta {
+    text-align: center;
+}
+
+.boton-ver-detalle-venta:hover, .boton-cerrar-modal:hover {
+    background-color: var(--clr-main);
+    color: var(--clr-white);
+    border: 2px solid var(--clr-main);
+}
+
+.venta-producto {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.boton-ver-detalle-venta, .boton-cerrar-modal, #boton-buscar {
+    margin-top: 0.5rem;
+    border: 0;
+    background-color: var(--clr-white);
+    color: var(--clr-main);
+    padding: .5rem;
+    text-transform: uppercase;
+    border-radius: 2rem;
+    cursor: pointer;
+    border: 2px solid var(--clr-white);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#boton-buscar{
+    border: 0;
+    width: 8vw;
+    margin-left: 1rem ;
+    background-color: var(--clr-main);
+    padding: 1rem;
+    color: var(--clr-white);
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+#boton-buscar:hover {
+    background-color: var(--clr-main-btn);
+    color: var(--clr-white);
+}
+
+.venta-producto-detalle {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr auto; /* Añadido 'auto' para el botón */
+    gap: 1rem;
+    align-items: center;
+}
+
+.boton-ver-detalle-venta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#fecha-inicio, #fecha-fin {
+    width: 15vw;
+}
+
+label {
+    margin: 1rem;
+}
+
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    border: none;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background: white;
+    width: 500px;
+}
+
+.visible {
+    display: block;
+}
+
+#buscador {
+    width: 300px;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}

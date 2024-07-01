@@ -1,0 +1,89 @@
+.cantidad-productos-comprados {
+    background-color: var(--clr-white);
+    color: var(--clr-main);
+    padding: 0.15rem .25rem;
+    border-radius: 0.25rem;
+}
+
+.contenedor-producto {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.producto-imagen {
+    width: 330px; /* Establece un tamaño fijo para la imagen */
+    height: 320px; /* Establece un tamaño fijo para la imagen */
+    border-radius: 1rem;
+}
+
+.producto-detalles {
+    width: 330px; /* Establece un tamaño fijo para la imagen */
+    height: 140px;
+    background-color: var(--clr-main);
+    color: var(--clr-white);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin-top: -2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.producto-detalles-botones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -0.2rem;
+}
+
+.precio-y-descuento {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 0.5rem;
+    flex-direction: row; /* Cambia la dirección del flex a vertical */
+}
+
+.producto-titulo {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.producto-agregar{
+    margin-bottom: rem;
+    margin-top: -0.3rem;
+    margin-right: 1.1rem;
+    border: 0;
+    background-color: var(--clr-white);
+    color: var(--clr-main);
+    padding: 0.4rem 1rem;
+    text-transform: uppercase;
+    border-radius: 2rem;
+    cursor: pointer;
+    border: 2px solid var(--clr-white);
+    transition: background-color 0.2s, color 0.2s;
+    align-self: end; /* Alinea el botón al final del contenedor */
+    justify-self: end; /* Alinea el botón a la derecha del contenedor */
+    width: 9rem; /* Permite que el ancho del botón se ajuste automáticamente */
+}
+
+.producto-agregar:hover {
+    background-color: var(--clr-main);
+    color: var(--clr-white);
+}
+
+.producto-detalles-link {
+    color: var(--clr-white);
+    font-family: 'Rubik', sans-serif;
+}
+
+.alinear-sweetalert {
+    text-align: left;
+}
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+}
